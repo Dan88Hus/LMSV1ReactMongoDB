@@ -1,0 +1,8 @@
+Client Setup
+    NextJs client 
+    Bootstrap and ant design
+        npm i bootstrap ant
+        _app.js is global variables
+    Pages
+    Ant menu and icons
+    Register page
