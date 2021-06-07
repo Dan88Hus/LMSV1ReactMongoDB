@@ -6,3 +6,15 @@ Client Setup
     Pages
     Ant menu and icons
     Register page
+Server Setup
+    Server setup
+        npm i express mongoose cors dotenv nodemon jsonwebtoken bcrypt morgan
+    Express
+    Routes
+    Controllers
+    Mongo atlas or local install
+    Mongoose connect
+    Axios post request
+        npm i axios
+    User Schema model
+    Bcrypt helper functions

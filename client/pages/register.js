@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import axios from 'axios'
 
 const register = () => {
 
@@ -6,9 +7,10 @@ const register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        console.table({name,email,password})
+        // console.table({name,email,password})
+
 
     }
     return(
