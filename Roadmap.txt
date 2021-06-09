@@ -18,3 +18,13 @@ Server Setup
         npm i axios
     User Schema model
     Bcrypt helper functions
+Registration
+    register page of NextJs
+    toast install
+    loading spinner 
+    .env.local
+        .env.local olarak kullaniyoruz nexjs de yoksa serverdakini aliyor
+        .env.public ise public olarak kullaniliyor
+    custom next dev 
+    active nav links
+
