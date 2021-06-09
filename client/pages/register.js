@@ -15,13 +15,14 @@ const register = () => {
         try {
             // console.table({name,email,password})
             setLoading(true)
-            const {data} = await axios.post(`${NEXT_PUBLIC_API}/register`,{
+            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API}/register`,{
                 name, email, password
             })
             // console.log("Register response", data)
             toast.success("Registration successful")
             setLoading(false)
         } catch (error) {
+            console.log("error in catch", error)
             toast.error(error.response.data)
             setLoading(false)
         }

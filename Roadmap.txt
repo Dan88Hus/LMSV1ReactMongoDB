@@ -25,6 +25,8 @@ Registration
     .env.local
         .env.local olarak kullaniyoruz nexjs de yoksa serverdakini aliyor
         .env.public ise public olarak kullaniliyor
+        ama front end de yazarken process.env olarak belirtiyoruz sadece. local yok
+        
     custom next dev 
     active nav links
 
