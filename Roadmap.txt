@@ -26,7 +26,19 @@ Registration
         .env.local olarak kullaniyoruz nexjs de yoksa serverdakini aliyor
         .env.public ise public olarak kullaniliyor
         ama front end de yazarken process.env olarak belirtiyoruz sadece. local yok
-        
-    custom next dev 
+
+    custom next dev
+        required in dev mode , cos we will use cookie based dev server, JSONWEBTOKEN will be used
+        to use cookies , we need have both client and server running on same domain
+        we need to use proxy for that bcs our client/next is running on 3000 and server is running on 8000
+        to use proxy we need to create custom server (only dev mode)
+        in production, we will use same oprigin/domain so we sont have to worry about it 
+        we can simply run build then start next app 
+            client side da server.js olusturduk
+            npm i http-proxy-middleware
+            package.json da npm run dev yapiyorduk daha onceden ("dev": "next dev")
+            simdi ise yine npm run dev ama script teki ("dev": "node server.js") ile calistiracaz.
+            register page deki post(`${process.env.NEXT_PUBLIC_API}/register` da
+                post(`/api/register` olacak
     active nav links
 
