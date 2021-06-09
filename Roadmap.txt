@@ -41,4 +41,31 @@ Registration
             register page deki post(`${process.env.NEXT_PUBLIC_API}/register` da
                 post(`/api/register` olacak
     active nav links
+Login
+    login page 
+        we will use context and useReducer in this way we can create our redux 
+        cookie will save token , hearders da yer aliyor 
+    login backend updated
+        first check if user password is correct?
+        take user password hash it and then compare it with hashed password saved in db
+        then we need to generate json web token/JWT and send to client
+        it will be used to access protected routes 
+            npm i jsonwebtoken
+            created secret in .env at server side 
+    Context, Global state
+        context api,
+        dispatch user,
+        save user to local storage 
+        logout 
+        conditional nav link 
+        protecting pages,
+        handling expired token using axios interceptors,
+        csrf token ,
+        verify token,
+        protected page,
+        user Route ,
+        
+
+
+
 

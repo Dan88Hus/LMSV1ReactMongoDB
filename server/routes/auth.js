@@ -8,11 +8,14 @@ const router = express.Router()
 
 //import controllers
 // const {createOrUpdateUser, currentUser} = require('../controllers/auth')
-const {register} = require('../controllers/auth')
+const {register, login, logout} = require('../controllers/auth')
 
 
 //
 router.post('/register', register)
+router.post('/login', login)
+router.get('/logout', logout)
+
 
 // router.post('/create-or-update-user', authCheck, createOrUpdateUser);
 // router.post('/current-user', authCheck, currentUser);

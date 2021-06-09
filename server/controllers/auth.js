@@ -1,5 +1,6 @@
 const User = require('../models/user')
 const {hashPassword, comparePassword} = require('../utils/auth')
+const jwt = require("jsonwebtoken")
 
 exports.register = async (req,res) => {
     try {
@@ -21,5 +22,36 @@ exports.register = async (req,res) => {
     } catch (error) {
         console.log(error)
         return res.status(400).send("Error try again")
+    }
+}
+
+exports.login = async (req,res) => {
+    try {
+    //    console.log(req.body) 
+    const {email, password} = req.body
+    const user = await User.findOne({email}).select(-{password}).exec()
+    if (!user) return res.status(400).send("No user Found")
+    const match = await comparePassword(password, user.password)
+    //create JWT
+    const token = jwt.sign({_id : user._id}, process.env.JWT_SECRET, {expiresIn: "7d"})
+    // to send cookie with the named cookie
+    res.cookie("token", token, {httpOnly: true, 
+        // secure: true //works for https
+    })
+    // send user as json.response
+    res.json(user)
+    } catch (error) {
+        console.log(error)
+        return res.status(400).send("Error Try again")
+    }
+}
+
+exports.logout = async(req, res) => {
+    try {
+        //clear cookie
+        res.clearCookie("token");
+        return res.json({message: "Signout success"})
+    } catch (error) {
+        console.log(error)
     }
 }
