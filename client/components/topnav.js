@@ -7,12 +7,14 @@ import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 
 
-const {Item} = Menu
+const {Item, SubMenu} = Menu
 
 const topnav = () => {
     const [current, setCurrent] = useState("")
 
     const {state, dispatch} = useContext(Context)
+
+    const {user} = state
 
     const router = useRouter()
 
@@ -38,7 +40,10 @@ const topnav = () => {
                 </Link>
             </Item>
 
-            <Item key="/login" onClick={(e)=> setCurrent(e.key)}>
+{user === null && (
+    <>
+
+        <Item key="/login" onClick={(e)=> setCurrent(e.key)}>
                 <Link href="/login">
                     <a>Login</a>
                 </Link>
@@ -48,12 +53,17 @@ const topnav = () => {
                 <Link href="/register">
                     <a>Register</a>
                 </Link>
-            </Item>
+        </Item>
+    </>
+)}
 
-
-            <Item onClick={logout} className="float-right">
-                    <a>Logout</a>
-            </Item>
+{user !== null &&  (
+    <SubMenu title={user && user.name} className="float-end">
+        <Item onClick={logout} className="float-end">
+                <a>Logout</a>
+        </Item>
+    </SubMenu>
+)}
         </Menu>
     )
 }
