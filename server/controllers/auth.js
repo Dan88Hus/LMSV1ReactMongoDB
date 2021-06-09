@@ -29,7 +29,7 @@ exports.login = async (req,res) => {
     try {
     //    console.log(req.body) 
     const {email, password} = req.body
-    const user = await User.findOne({email}).select(-{password}).exec()
+    const user = await User.findOne({email}).select("-password").exec()
     if (!user) return res.status(400).send("No user Found")
     const match = await comparePassword(password, user.password)
     //create JWT
@@ -51,6 +51,16 @@ exports.logout = async(req, res) => {
         //clear cookie
         res.clearCookie("token");
         return res.json({message: "Signout success"})
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+exports.currentUser = async(req,res) => {
+    try {
+        const user = await User.findById(req.user._id).select("-password").exec()
+        console.log("Current User", user)
+        return res.json(user)
     } catch (error) {
         console.log(error)
     }

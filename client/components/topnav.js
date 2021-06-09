@@ -58,8 +58,8 @@ const topnav = () => {
 )}
 
 {user !== null &&  (
-    <SubMenu title={user && user.name} className="float-end">
-        <Item onClick={logout} className="float-end">
+    <SubMenu key="/logout" title={user && user.name} className="float-end">
+        <Item key="logout" onClick={logout} className="float-end">
                 <a>Logout</a>
         </Item>
     </SubMenu>

@@ -62,7 +62,12 @@ Login
         handling expired token using axios interceptors,
             axios interceptors are like middleware in express 
         csrf token ,
+            cookie based auth larda risk
+                req te tokrn atiyor ve response ile karsilastiriyor
+            npm i csurf
         verify token,
+            we do create middleware for this
+                npm i express-jwt
         protected page,
         user Route ,
 

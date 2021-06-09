@@ -1,6 +1,6 @@
 import {useReducer, createContext, useEffect} from 'react'
-import axios from 'axios'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 
 const initialState = {
     user: null,
@@ -9,7 +9,7 @@ const initialState = {
 //create context
 const Context = createContext()
 
-const router = useRouter()
+
 
 //root reducer
 const rootReducer = (state, action) => {    
@@ -27,6 +27,8 @@ const rootReducer = (state, action) => {
 
 const Provider = ({children}) =>{
     const [state, dispatch] = useReducer(rootReducer, initialState)
+
+    const router = useRouter()
 
     useEffect(()=>{
         //useEffect we wrote after saving LOGIN DISPATCH as localStorage in LOGIN page
@@ -63,6 +65,16 @@ const Provider = ({children}) =>{
             return Promise.reject(error)
         }
     )
+
+    useEffect(()=>{
+        const getCsrfToken = async () =>{
+            const {data} = await axios.get("/api/csrf-token")
+            // console.log("CSRF", data)
+            axios.defaults.headers["X-CSRF-Token"] = data.getCsrfToken
+
+        }
+        getCsrfToken()
+    },[])
 
     return(
         <Context.Provider value={{state, dispatch}} >
