@@ -44,6 +44,9 @@ exports.login = async (req,res) => {
     const user = await User.findOne({email}).exec()
     if (!user) return res.status(400).send("No user Found")
     const match = await comparePassword(password, user.password)
+    if(!match){
+        return res.status(400).send("Wrong Password")
+    }
     //create JWT
     const token = jwt.sign({_id : user._id}, process.env.JWT_SECRET, {expiresIn: "7d"})
     // to send cookie with the named cookie
@@ -158,4 +161,18 @@ exports.forgotPassword = async(req,res)=>{
     } catch (error) {
         console.log(error.message)
     }
+}
+
+exports.resetPassword = async(req, res)=>{
+    try {
+        const {email, code, newPassword} = req.body
+        // console.table( req.body)
+        const hashedPassword = await hashPassword(newPassword)
+        const user = User.findOneAndUpdate({
+            email, passwordResetCode: code
+        }, {password: hashedPassword, passwordResetCode: ""}).exec()
+        return res.json({ok: true})
+    } catch (error) {
+        console.log(error)
+    }   return res.status(400).send("reset password error")
 }

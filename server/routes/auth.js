@@ -9,7 +9,7 @@ const {requireSignin} = require('../middlewares/index')
 //import controllers
 // const {createOrUpdateUser, currentUser} = require('../controllers/auth')
 const {register, login, logout, currentUser
-    ,sendTestEmail, forgotPassword} = require('../controllers/auth')
+    ,sendTestEmail, forgotPassword, resetPassword} = require('../controllers/auth')
 
 
 //
@@ -19,6 +19,7 @@ router.get('/logout', logout)
 router.get("/current-user", requireSignin, currentUser)
 router.get("/send-email", sendTestEmail)
 router.post("/forgot-password", forgotPassword)
+router.post("/reset-password", resetPassword)
 
 
 // router.post('/create-or-update-user', authCheck, createOrUpdateUser);

@@ -37,8 +37,8 @@ const ForgotPassword = () => {
             setSuccess(true)
             toast.success("Check your email for secret code")
             // redirect user
-            router.push("/login")
-            // setLoading(false)
+            // router.push("/login")
+            setLoading(false)
         } catch (error) {
             console.log("error in catch", error)
             toast.error(error.response.data)
@@ -48,15 +48,20 @@ const ForgotPassword = () => {
         }
 
     }
-    const handleResetPassword = async()=>{
+    const handleResetPassword = async(e)=>{
         e.preventDefault()
+        console.log("handleresetpassword")
         try {
             setLoading(true)
             const {data} = await axios.post("/api/reset-password",{
                 email, code, newPassword
             })
-            setLoading(false)
+            if(data.ok){
+                toast.success("Login with new Passord")
+                setLoading(false)
+            }
         } catch (error) {
+            setLoading(false)
             console.log("handleResetPassword Error", error.response.data)
         }
     }
@@ -64,7 +69,7 @@ const ForgotPassword = () => {
         <>
             <h1 className="text-center">Forgot Password</h1>
             <div className="container col-md-4 offset-md-4 pb-5">
-                <form onSubmit={success? handleResetPassword : handleSubmit}>
+                <form onSubmit={success ? handleResetPassword : handleSubmit}>
 
                     <input type="email" 
                     className="form-control mb-4 p-2" 
