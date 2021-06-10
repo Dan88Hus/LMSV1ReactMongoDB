@@ -70,7 +70,21 @@ Login
                 npm i express-jwt
         protected page,
             user.js only allowed for logged user
-        user Route ,
+        userRoute
+            this will protect children 
+    AWS IAM
+        AWS setup user
+        1 year free tier (from AWS console)
+            AWS SES (Simple EMail Service)
+            AWS S3 (simple storage, vodeo files and images)
+        Login to AWS 
+    sending email 
+        npm i aws-sdk in server 
+    forgot password
+    send email to reset password 
+    reset password client 
+    reset password server 
+
 
 
 

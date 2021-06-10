@@ -1,6 +1,18 @@
 const User = require('../models/user')
 const {hashPassword, comparePassword} = require('../utils/auth')
 const jwt = require("jsonwebtoken")
+const AWS = require("aws-sdk")
+const { getMaxListeners } = require('../models/user')
+
+
+const awsConfig = {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION,
+    apiVersion: process.env.AWS_API_VERSION, 
+}
+const SES = new AWS.SES(awsConfig)
+
 
 exports.register = async (req,res) => {
     try {
@@ -60,9 +72,46 @@ exports.logout = async(req, res) => {
 exports.currentUser = async(req,res) => {
     try {
         const user = await User.findById(req.user._id).select("-password").exec()
-        console.log("Current User", user)
-        return res.json(user)
+        // console.log("Current User", user)
+        return res.json({ok:true})
     } catch (error) {
         console.log(error)
     }
+}
+
+exports.sendTestEmail = async(req, res) =>{
+    try {
+        const params = {
+            Source: process.env.EMAIL_FROM,
+            Destination: {
+               ToAddresses: ["huseyinozdogan@gmail.com"],
+            },
+            ReplyToAddresses: ["huseyinozdogan@gmail.com"],
+            Message: {
+                Body: {
+                    Html: {
+                        Charset: "UTF-8",
+                        Data: `
+                            <html>
+                            <h1>Reset Password Link</h1>
+                            <p>Please use the following link to reset your password</p>
+                            </html>
+                        `,
+                    },
+                },
+                Subject: {
+                    Charset: "UTF-8",
+                    Data: "Password Reset Link",
+                }
+            }
+        }
+        const emailSent = SES.sendEmail(params).promise()
+        emailSent.then((data)=>{
+            console.log(data)
+            res.json({ok:true})
+        })
+    } catch (error) {
+        console.log(error)
+    }
+
 }
