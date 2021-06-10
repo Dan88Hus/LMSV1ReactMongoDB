@@ -81,6 +81,8 @@ Login
     sending email 
         npm i aws-sdk in server 
     forgot password
+        to generate secret code we use
+        npm i nanoid
     send email to reset password 
     reset password client 
     reset password server 
