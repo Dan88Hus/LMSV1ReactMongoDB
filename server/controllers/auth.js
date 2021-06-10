@@ -21,7 +21,7 @@ exports.register = async (req,res) => {
 
     } catch (error) {
         console.log(error)
-        return res.status(400).send("Error try again")
+        return res.status(400).send("Error try register again")
     }
 }
 
@@ -29,7 +29,7 @@ exports.login = async (req,res) => {
     try {
     //    console.log(req.body) 
     const {email, password} = req.body
-    const user = await User.findOne({email}).select("-password").exec()
+    const user = await User.findOne({email}).exec()
     if (!user) return res.status(400).send("No user Found")
     const match = await comparePassword(password, user.password)
     //create JWT
@@ -39,10 +39,11 @@ exports.login = async (req,res) => {
         // secure: true //works for https
     })
     // send user as json.response
+    user.password = undefined
     res.json(user)
     } catch (error) {
-        console.log(error)
-        return res.status(400).send("Error Try again")
+        console.log(error.message)
+        return res.status(400).send("Error Try Login again")
     }
 }
 

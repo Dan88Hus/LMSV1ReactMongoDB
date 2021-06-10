@@ -69,6 +69,7 @@ Login
             we do create middleware for this
                 npm i express-jwt
         protected page,
+            user.js only allowed for logged user
         user Route ,
 
 
