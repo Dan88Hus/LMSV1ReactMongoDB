@@ -32,3 +32,23 @@ exports.makeInstructor = async(req, res)=>{
         // console.log(error)
     }   return res.status(400).send("make instructor , stripe error")
 }
+
+exports.getAccountStatus = async(req,res) =>{
+    try {
+        const user = await User.findById(req.user._id).exec()
+        const account = await stripe.accounts.retrieve(user.stripe_account_id)
+        if(!account.charges_enabled){
+            return res.status(401).send("charge is unavailable, unauthorized")
+        } else {
+            const statusUpdated = await User.findByIdAndUpdate(user._id, {
+                stripe_seller: account,
+                $addToSet: {role: "Instructor"}
+                // $addToSet te duplicate data olmayacak , eger duplicate varsa push veya set method kullanilabilinir
+            }, {new:true}).select("-password").exec()
+            // console.log("StatusUpdated......",statusUpdated)
+            return res.json(statusUpdated)
+        }
+    } catch (error) {
+        console.log(error.message)
+    }
+}
