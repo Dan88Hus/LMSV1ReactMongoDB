@@ -76,6 +76,8 @@ const topnav = () => {
     </Item>
 ) }
 
+
+
 {user !== null &&  (
     <SubMenu key="/submenu" title={user && user.name} className="float-end">
         <ItemGroup>
@@ -92,6 +94,16 @@ const topnav = () => {
 
         </ItemGroup>
     </SubMenu>
+)}
+{user && user.role && user.role.includes("Instructor") && (
+        <Item key="/instructor"
+        onClick={(e)=>setCurrent(e.key)}
+        className="float-end "
+        >
+        <Link href="/instructor">
+            <a>Instructor</a>
+        </Link>
+        </Item>
 )}
         </Menu>
     )
