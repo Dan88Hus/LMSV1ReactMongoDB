@@ -1,7 +1,7 @@
-import { useEffect, useState, useContext} from 'react'
-// import {Context} from '../../context/index'
+import { useEffect, useState} from 'react'
 import axios from 'axios'
 import {useRouter} from 'next/router'
+import UserNav from "../nav/UserNav"
 
 
 const UserRoute = ({children}) => {
@@ -26,8 +26,21 @@ const UserRoute = ({children}) => {
     },[])
 
     return (
+    
     <>
-    {!ok ? (<h1 className="text-center">Must be LOGIN</h1>) : <>{children}</>}
+    {!ok ? (<h1 className="text-center">Museet be LOGIN</h1>) : 
+    
+    <div className="container-fluid">
+        <div className="row">
+            <div className="col-md-2">
+                <UserNav />
+            </div>
+            <div className="col-md-10">
+                {children}
+            </div>
+        </div>
+    </div>
+    }
     </>
     ) 
 }

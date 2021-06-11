@@ -44,7 +44,7 @@ const login = () => {
 
             toast.success("Login successful")
             // redirect user
-            router.push("/")
+            router.push("/user")
             
             setLoading(false)
 

@@ -10,7 +10,7 @@ const UserIndex = () => {
     return (
     <UserRoute>
     <h1 clasName="text-center">
-        {JSON.stringify(user, null ,4)}
+        User Dashboard
     </h1>
     </UserRoute>
     ) 
