@@ -96,6 +96,16 @@ stripe onboarding
     stripe onboarding client 
     stripe callback page 
     user account status from stripe
+current instructor and protected routes 
+    dispatch updated user info to context 
+    current instructor server 
+    instructor protected routes 
+    active nav links 
+create course (form)
+    create course form 
+    create course component 
+    price dropdown category
+    
  
 
 
