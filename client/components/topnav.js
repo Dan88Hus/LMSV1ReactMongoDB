@@ -57,6 +57,25 @@ const topnav = () => {
     </>
 )}
 
+{user && user.role && user.role.includes("Instructor") ? (
+    <Item key=" "
+    onClick={(e)=>setCurrent(e.key)}
+    >
+    <Link href="/instructor/course/create">
+        <a>Create Course</a>
+    </Link>
+    </Item>
+
+) : (
+    <Item key="/user/become-instructor"
+    onClick={(e)=>setCurrent(e.key)}
+    >
+    <Link href="/user/become-instructor">
+        <a>Become Instructor</a>
+    </Link>
+    </Item>
+) }
+
 {user !== null &&  (
     <SubMenu key="/submenu" title={user && user.name} className="float-end">
         <ItemGroup>
