@@ -86,6 +86,18 @@ Login
     send email to reset password 
     reset password client 
     reset password server 
+stripe onboarding
+    stripe setup 
+    user sidebar nav 
+    conditional llinks pages 
+    become instructor page 
+    stripe account link onboarding
+        npm i stripe query-string  in server 
+    stripe onboarding client 
+    stripe callback page 
+    user account status from stripe 
+
+
 
 
 
