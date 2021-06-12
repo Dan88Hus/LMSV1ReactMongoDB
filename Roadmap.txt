@@ -105,6 +105,14 @@ create course (form)
     create course form 
     create course component 
     price dropdown category
+AWS s3 Image Upload
+    image Preview
+    image resize client
+        npm i react-image-file-resizer
+    AWS s3 Bucket policy 
+    upload image to s3 
+    image remove client 
+    delete image s3 server 
     
  
 

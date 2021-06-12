@@ -2,8 +2,8 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import InstructorRoute from '../../../components/routes/InstructorRoute'
 import CourseCreateForm from '../../../components/forms/CourseCreateForm'
-
-
+import Resizer from 'react-image-file-resizer'
+import {toast} from 'react-toastify'
 
 const CourseCreate = () =>{
     const [values, setValues] = useState({
@@ -15,14 +15,41 @@ const CourseCreate = () =>{
         paid: true,
         loading: false,
     })
+    const [image, setImage] = useState("")
     const [preview, setPreview] = useState("")
+    const [uploadButtonText, setUploadButtonText] = useState("Upload Image")
 
     const handleChange = (e)=>{
         setValues({...values, [e.target.name]: e.target.value})
     }
 
     const handleImage = (e) => {
-        setPreview(window.URL.createObjectURL(e.target.files[0]))
+        let file = e.target.files[0]
+        setPreview(window.URL.createObjectURL(file))
+        setUploadButtonText(file.name)
+        setValues({...values, loading:true})
+        Resizer.imageFileResizer(
+            file,
+            720,
+            500,
+            "JPEG",
+            100,
+            0,
+            // uri can any variable name, which is resized image
+            async(uri)=>{
+               try {
+                   let {data} = await axios.post("/api/course/upload-image", {
+                       image: uri,
+                   })
+                   console.log("imageuploaded", data)
+                   setValues({...values, loading: false})
+                   setImage(data)
+               } catch (error) {
+                   console.log(error)
+                   setValues({...values, loading:false})
+                   toast.error("Image Upload failed")
+               } 
+            })
     }
 
     const handleSubmit = e =>{
@@ -41,7 +68,8 @@ const CourseCreate = () =>{
             values={values}
             setValues={setValues}
             preview={preview}
-            setPreview={setPreview}/>
+            uploadButtonText={uploadButtonText}
+            />
             <pre>{JSON.stringify(values)}</pre>
         </div>
         </InstructorRoute>

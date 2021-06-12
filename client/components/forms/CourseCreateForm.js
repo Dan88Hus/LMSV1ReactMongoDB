@@ -2,7 +2,7 @@ import {Select, Button, Avatar} from "antd"
 
 const {Option} = Select
 
-const CourseCreateForm = ({handleChange,handleImage,handleSubmit, values, setValues, preview, setPreview})=> {
+const CourseCreateForm = ({handleChange,handleImage,handleSubmit, values, setValues, preview, uploadButtonText})=> {
     const children=[]
     for (let i=9.99; i<= 100.99; i++){
         children.push(<Option key={i.toFixed(2)}>${i.toFixed(2)}</Option>)
@@ -62,7 +62,7 @@ const CourseCreateForm = ({handleChange,handleImage,handleSubmit, values, setVal
             <div className="col-auto">
                 <div className="form-group">
                     <label className="btn btn-outline text-start mt-1 mb-1">
-                        {values.loading ? "Uploading"  : "Image Upload"}
+                        {uploadButtonText}
                         <input type="file" name="image" 
                         onChange={handleImage}
                         accept="image/*"
