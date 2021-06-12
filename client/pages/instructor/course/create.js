@@ -1,11 +1,14 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import axios from 'axios'
 import InstructorRoute from '../../../components/routes/InstructorRoute'
 import CourseCreateForm from '../../../components/forms/CourseCreateForm'
 import Resizer from 'react-image-file-resizer'
 import {toast} from 'react-toastify'
+import {useRouter} from 'next/router'
 
 const CourseCreate = () =>{
+    const router = useRouter()
+
     const [values, setValues] = useState({
         name: "",
         description: "",
@@ -52,10 +55,17 @@ const CourseCreate = () =>{
             })
     }
 
-    const handleSubmit = e =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault()
-        console.log(values)
-    }
+        // console.log(values)
+        try {
+            const {data} = await axios.post("/api/course", {...values, image})
+            toast.success("Course created")
+            router.push("/instructor")
+        } catch (error) {
+            console.log("create course send values to server error", error.response.data)
+            toast.error("Create course failed")
+        }  }
     const handleImageRemove = async()=>{
         console.log("REMOVE IMAGE CLICKED")
         try {

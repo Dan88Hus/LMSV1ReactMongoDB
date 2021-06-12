@@ -1,5 +1,7 @@
 const AWS = require('aws-sdk') 
 const {nanoid} = require("nanoid")
+const Course = require("../models/course")
+const slugify = require("slugify")
 
 
 const awsConfig = {
@@ -12,7 +14,7 @@ const awsConfig = {
 const S3 = new AWS.S3(awsConfig)
 
 exports.uploadImage = async(req, res)=>{
-    console.log(req.body.image)
+    // console.log(req.body.image)
     try {
         const {image} = req.body
         if(!image) {
@@ -58,5 +60,26 @@ exports.removeImage = async(req, res)=>{
        })
     } catch (error) {
         console.log(error)
+    }
+}
+
+exports.create = async(req,res) =>{
+    // console.log("create course")
+    // console.log(req.body)
+    // return
+    try {
+        const alreadyExist = await Course.findOne({slug: slugify(req.body.name.toLowerCase())})
+        if(alreadyExist){
+            return res.status(400).send("Title is taken")
+        }
+        const course = await new Course({
+            slug: slugify(req.body.name),
+            instructor: req.user._id,
+            ...req.body,
+        }).save()
+        res.json(course)
+    } catch (error) {
+        console.log("Course create server Error")
+        return res.status(400).send("Course create failed")
     }
 }

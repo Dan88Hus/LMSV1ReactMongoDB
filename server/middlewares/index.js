@@ -1,4 +1,4 @@
-
+const User = require("../models/user")
 const expressJwt = require("express-jwt")
 
 exports.requireSignin = expressJwt({
@@ -8,14 +8,15 @@ exports.requireSignin = expressJwt({
 })
 
 exports.isInstructor = async(req, res , next) =>{
+    // console.log("isInstructor middleware")
     try {
         const user = await User.findById(req.user._id).exec()
+        // console.log(user)
         if(!user.role.includes("Instructor")){
             return res.sendStatus(403)
         } else {
             next()
         }
-
     } catch (error) {
         console.log("isInstructor middleware Error")
     }
