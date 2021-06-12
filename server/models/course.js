@@ -43,7 +43,7 @@ const courseSchema = new mongoose.Schema({
     },
     price: {
         type: Number,
-        default: 9.99,
+        // default: 9.99,
     },
     image: {},
     category: {
@@ -58,6 +58,7 @@ const courseSchema = new mongoose.Schema({
         default: true,
     },
     instructor: {
+        // type: mongoose.Schema.Types.ObjectId, 
         type: ObjectId,
         ref: "User",
         required: true
