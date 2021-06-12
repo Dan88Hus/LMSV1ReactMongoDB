@@ -1,8 +1,8 @@
-import {Select, Button, Avatar} from "antd"
+import {Select, Button, Avatar, Badge} from "antd"
 
 const {Option} = Select
 
-const CourseCreateForm = ({handleChange,handleImage,handleSubmit, values, setValues, preview, uploadButtonText})=> {
+const CourseCreateForm = ({handleChange,handleImage,handleSubmit, values, setValues, preview, uploadButtonText, handleImageRemove})=> {
     const children=[]
     for (let i=9.99; i<= 100.99; i++){
         children.push(<Option key={i.toFixed(2)}>${i.toFixed(2)}</Option>)
@@ -71,8 +71,11 @@ const CourseCreateForm = ({handleChange,handleImage,handleSubmit, values, setVal
                 </div>
             </div>
             {preview && (<div className="col-auto">
-            <Avatar width={200} src={preview}>
-            </Avatar>
+            <Badge
+            count="X"
+            onClick={handleImageRemove}
+            style={{cursor: "pointer"}}
+            ><Avatar width={200} src={preview}/></Badge>
             </div>
 
             )}

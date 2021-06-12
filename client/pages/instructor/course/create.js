@@ -15,7 +15,7 @@ const CourseCreate = () =>{
         paid: true,
         loading: false,
     })
-    const [image, setImage] = useState("")
+    const [image, setImage] = useState({})
     const [preview, setPreview] = useState("")
     const [uploadButtonText, setUploadButtonText] = useState("Upload Image")
 
@@ -56,6 +56,21 @@ const CourseCreate = () =>{
         e.preventDefault()
         console.log(values)
     }
+    const handleImageRemove = async()=>{
+        console.log("REMOVE IMAGE CLICKED")
+        try {
+            setValues({...values, loading: true})
+            const res = await axios.post("/api/course/remove-image", {image})
+            setImage({})
+            setPreview("")
+            setUploadButtonText("Upload Image") 
+            setValues({...values, loading: false})
+        } catch (error) {
+            console.log("Image Remove failed",error)
+            setValues({...values, loading: false})
+            toast.error("Image Remove failed")
+        }
+    }
 
     return (
         <InstructorRoute>
@@ -69,6 +84,7 @@ const CourseCreate = () =>{
             setValues={setValues}
             preview={preview}
             uploadButtonText={uploadButtonText}
+            handleImageRemove={handleImageRemove}
             />
             <pre>{JSON.stringify(values)}</pre>
         </div>

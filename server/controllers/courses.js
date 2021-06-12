@@ -42,3 +42,21 @@ exports.uploadImage = async(req, res)=>{
         console.log(error)
     }
 }
+exports.removeImage = async(req, res)=>{
+    try {
+       const {image} = req.body 
+       const params = {
+           Bucket: image.Bucket,
+           Key: image.Key,
+       }
+       S3.deleteObject(params, (error, data) =>{
+           if(error){
+               console.log("Image Delete Error", error)
+               res.sendStatus(400)
+           }
+           res.send({ok: true})
+       })
+    } catch (error) {
+        console.log(error)
+    }
+}
