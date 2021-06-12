@@ -113,6 +113,17 @@ AWS s3 Image Upload
     upload image to s3 
     image remove client 
     delete image s3 server 
+save course and instructor access 
+    course Schema 
+        in here we created course schema aas lesson schema but lesson schema is array item of course schema
+    instructor middleware and create endpoint 
+    save courses in db 
+    instructor courses in dashboard 
+    instructor course list 
+    single course view for instructor 
+    single course view 
+    display markdown context 
+    
     
  
 
