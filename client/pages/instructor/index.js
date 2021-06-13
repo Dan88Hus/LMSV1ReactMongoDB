@@ -19,13 +19,18 @@ const InstructorIndex = () =>{
         {courses && courses.map(course =>{
             return (
                 <>
-                <div className="form-control mb-2 media pt-2">
-                    <Avatar shape="square" size={80}
-                    src={course.image ? course.image.Location : "No Image"} />
-                    <div className="media-body pl-2">
+                <div className="form-control mb-2">
                     <div className="row">
                         <div className="col">
-                            <Link href={`/instructor/course/view/{course._id}`}>
+                        <Avatar shape="square" size={80}
+                    src={course.image ? course.image.Location : "No Image"} 
+                    />
+                        </div>
+                        
+                        <div className="col">
+                    <div className="row">
+                        <div className="col-auto">
+                            <Link href={`/instructor/course/view/${course.slug}`}>
                                 <a className="h5 mt-2 text-primary">{course.name}</a>
                             </Link>
                             <p >{course.lessons.length} Lessons</p>
@@ -34,16 +39,20 @@ const InstructorIndex = () =>{
                                 At least 5 lessons are required to publish a course
                             </p>) : course.published ? (<p>
                                 Your course is live in the marketplace
-                            </p>) : (<p>Your course is ready to be published</p>) }
+                            </p>) : (<p className="text-muted">ready to be published</p>) }
                         </div>
                     </div>
-                    <div className="col mt-3 text-end">
-                        {course.published ? (<div>Published</div>)
+                    <div className="col text-end">
+                        {course.published ? (<div className="text-muted">Published</div>)
                          : 
-                        (<div>Not Published</div>)}
+                        (<div className="text-muted">Not Published</div>)}
                     </div>
                     </div>
                 </div>
+
+                    </div>
+                  
+
                 </>
 
             )
