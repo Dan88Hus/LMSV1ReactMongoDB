@@ -1,9 +1,11 @@
-import {Button} from "antd"
+import { CloseCircleFilled } from "@ant-design/icons"
+import {Button, Progress} from "antd"
 import {useState, useEffect} from 'react'
 
 const AddLessonForm = ({values, setValues, handleAddLesson, uploading, setUploading,
-    uploadButtonText, handleVideo}) => {
+    uploadButtonText, handleVideo, progress, handleVideoRemove}) => {
         
+
 
     return (
         <div className="container pt-3">
@@ -22,10 +24,26 @@ const AddLessonForm = ({values, setValues, handleAddLesson, uploading, setUpload
                  placeholder="Content"
                  ></textarea>
 
+                <div className="tex-center">
                 <label className="btn btn-dark mt-3 text-center">
                     {uploadButtonText}
                     <input onChange={handleVideo} type="file" accept="video/*" hidden />
                 </label>
+                {!uploading && values.video.Location && (
+                    <span
+                    onClick={handleVideoRemove}
+                    ><CloseCircleFilled className="text-danger" style={{paddingTop: "-10px  ",cursor: "pointer"}}/>
+                    </span>
+                )}
+                </div>
+                
+                <br />
+                {progress>0 && (
+                    <Progress className="justify-content-center"
+                    percent={progress}
+                    steps={10}
+                    />
+                ) }
                 <br />
 
                  <Button

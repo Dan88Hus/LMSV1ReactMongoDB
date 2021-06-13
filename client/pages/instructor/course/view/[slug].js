@@ -7,6 +7,7 @@ import {EditOutlined, CheckOutlined} from '@ant-design/icons'
 import ReactMarkDown from 'react-markdown'
 import AddLessonForm from '../../../../components/forms/AddLessonForm'
 import {toast} from "react-toastify"
+import { countDocuments } from '../../../../../server/models/user'
 
 const CourseView = ()=>{
     const [course,setCourse] = useState({})
@@ -14,7 +15,7 @@ const CourseView = ()=>{
     const [values, setValues] = useState({
         title: "",
         content: "",
-        video: "",
+        video: {},
     })
     const [uploading, setUploading] = useState(false)
     const [uploadButtonText, setUploadButtonText] = useState("Upload Video")
@@ -24,6 +25,27 @@ const CourseView = ()=>{
 
     const router = useRouter()
     const {slug} = router.query
+
+    const handleVideoRemove = async()=>{
+        try {
+            setUploading(true)
+            console.log("handleRemoveClicked")
+            const {data} = await axios.post("/api/course/remove=video",{
+                values: video
+            })
+            console.log(data)
+            setValues({...values, video:{}})
+            setProgress(0)
+            setUploading(false)
+            setUploadButtonText("Upload video")
+            toast.success("Video deleted")
+
+        } catch (error) {
+            console.log(error.message)
+            setUploading(false)
+            toast.error("Video delete failed")
+        }        
+    }
  
 
     useEffect(async()=>{
@@ -127,7 +149,9 @@ const CourseView = ()=>{
                         uploading={uploading}
                         setUploading={setUploading}
                         uploadButtonText={uploadButtonText}
-                        handleVideo={handleVideo}/>
+                        handleVideo={handleVideo}
+                        progress={progress}
+                        handleVideoRemove={handleVideoRemove}/>
                     </Modal>
                     </div>
                     }
