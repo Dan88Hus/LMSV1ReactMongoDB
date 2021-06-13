@@ -123,6 +123,20 @@ save course and instructor access
     single course view for instructor 
     single course view 
     display markdown context 
+        npm i react-markdown
+AWS s3 VIDEO upload and lessons
+    add lesson modal
+    add lesson form 
+    video upload button 
+    send video upload using form data 
+    upload video to s3 
+    remove vide request
+    remove video from s3 
+    only instructor can upload and delete videos
+    add lesson 
+    rendering lessons as list items 
+
+
     
     
  
