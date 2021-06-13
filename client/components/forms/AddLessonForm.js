@@ -1,7 +1,10 @@
 import {Button} from "antd"
 import {useState, useEffect} from 'react'
 
-const AddLessonForm = ({values, setValues, handleAddLesson, uploading, setUploading}) => {
+const AddLessonForm = ({values, setValues, handleAddLesson, uploading, setUploading,
+    uploadButtonText, handleVideo}) => {
+        
+
     return (
         <div className="container pt-3">
              <form onSubmit={handleAddLesson} className="">
@@ -18,6 +21,13 @@ const AddLessonForm = ({values, setValues, handleAddLesson, uploading, setUpload
                  value={values.content}
                  placeholder="Content"
                  ></textarea>
+
+                <label className="btn btn-dark mt-3 text-center">
+                    {uploadButtonText}
+                    <input onChange={handleVideo} type="file" accept="video/*" hidden />
+                </label>
+                <br />
+
                  <Button
                  onClick={handleAddLesson}
                  className="col mt-3"

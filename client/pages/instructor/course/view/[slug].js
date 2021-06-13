@@ -16,6 +16,7 @@ const CourseView = ()=>{
         video: "",
     })
     const [uploading, setUploading] = useState(false)
+    const [uploadButtonText, setUploadButtonText] = useState("Upload Video")
 
 
     const router = useRouter()
@@ -32,6 +33,13 @@ const CourseView = ()=>{
         e.preventDefault()
         console.log(values)
     }
+
+    const handleVideo = (e)=>{
+        console.log("handleVideo upload")
+        const file = e.target.files[0]
+        setUploadButtonText(file.name)
+    }
+
 
     return (
         <InstructorRoute>
@@ -93,7 +101,9 @@ const CourseView = ()=>{
                         <AddLessonForm values={values} setValues={setValues}
                         handleAddLesson={handleAddLesson}
                         uploading={uploading}
-                        setUploading={setUploading}/>
+                        setUploading={setUploading}
+                        uploadButtonText={uploadButtonText}
+                        handleVideo={handleVideo}/>
                     </Modal>
                     </div>
                     }
