@@ -128,8 +128,11 @@ AWS s3 VIDEO upload and lessons
     add lesson modal
     add lesson form 
     video upload button 
-    send video upload using form data 
+    send video upload using form data
+        we will send video to back end as new formData("video", data)
     upload video to s3 
+        and we will read formData by express-formidable library
+        it behaves as middleware
     remove vide request
     remove video from s3 
     only instructor can upload and delete videos

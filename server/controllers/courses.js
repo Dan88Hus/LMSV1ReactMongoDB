@@ -2,6 +2,7 @@ const AWS = require('aws-sdk')
 const {nanoid} = require("nanoid")
 const Course = require("../models/course")
 const slugify = require("slugify")
+const fs = require("fs")
 
 
 const awsConfig = {
@@ -93,4 +94,41 @@ exports.read = async(req,res) =>{
         console.log(error.message)
 
     }
+}
+
+exports.uploadVideo = async(req, res)=> {
+    try {
+        const {video} = req.files
+        // req.files formidable middleware deen dolayi geliyor
+
+        const params = {
+            Bucket: "huseyindevbucket",
+            Key: `${nanoid()}.${video.type.split("/")[1]}`, 
+            //mp4 we split video from video-mp4     
+            // Body: base64Data,
+            Body: fs.readFileSync(video.path),
+            ACL: "public-read",
+            // ContentEncoding: "base64",
+            ContentType: video.type,
+        }
+        // console.log("========",video)
+        if(!video){
+            return res.status(400).send("No video")
+        }
+            //upload to s3
+        S3.upload(params, (err, data) =>{
+            if(err){
+                console.log(err)
+                return res.sendStatus(400)
+            }
+            // console.log(data)
+            res.send(data)
+        })
+        } catch (error) {
+            console.log(error.message)
+        }
+
+
+
+
 }

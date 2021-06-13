@@ -53,7 +53,7 @@ const CourseView = ()=>{
                 }
             })
             // once response is received 
-            console.log(data)
+            // console.log(data)
             setValues({...values, video: data})
             setUploading(false)
             toast.success("video Uploaded")
