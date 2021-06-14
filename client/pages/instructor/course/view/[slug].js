@@ -50,9 +50,20 @@ const CourseView = ()=>{
     },[])
 
     //functions for add lesson
-    const handleAddLesson = (e) =>{
-        e.preventDefault()
-        console.log(values)
+    const handleAddLesson = async(e) =>{
+        try {
+            e.preventDefault()
+            // console.log(values)
+            const {data} = await axios.post(`/api/course/lesson/${slug}/${course.instructor._id}`, values)
+            setCourse(data)
+            setValues({...values, title: "", content: "", video: {}})
+            setVisible(false) //to close Modal
+            setUploadButtonText("Upload video")
+            toast.success("lesson is saved")
+        } catch (error) {
+            console.log(error.message)
+            toast.error("save lesson is failed")
+        }
     }
 
     const handleVideo = async(e)=>{
