@@ -67,28 +67,29 @@ const CourseEdit = () =>{
         e.preventDefault()
         // console.log(values)
         try {
-            const {data} = await axios.post("/api/course", {...values, image})
-            toast.success("Course created")
-            router.push("/instructor")
+            const {data} = await axios.put(`/api/course/${slug}`, {...values, image})
+            toast.success("Course updated")
+            // router.push("/instructor")
         } catch (error) {
-            console.log("create course send values to server error", error.response.data)
-            toast.error("Create course failed")
+            console.log("update course send values to server error", error.response.data)
+            toast.error("update course failed")
         }  }
-    const handleImageRemove = async()=>{
-        console.log("REMOVE IMAGE CLICKED")
-        try {
-            setValues({...values, loading: true})
-            const res = await axios.post("/api/course/remove-image", {image})
-            setImage({})
-            setPreview("")
-            setUploadButtonText("Upload Image") 
-            setValues({...values, loading: false})
-        } catch (error) {
-            console.log("Image Remove failed",error)
-            setValues({...values, loading: false})
-            toast.error("Image Remove failed")
-        }
-    }
+
+    // const handleImageRemove = async()=>{
+    //     console.log("REMOVE IMAGE CLICKED")
+    //     try {
+    //         setValues({...values, loading: true})
+    //         const res = await axios.post("/api/course/remove-image", {image})
+    //         setImage({})
+    //         setPreview("")
+    //         setUploadButtonText("Upload Image") 
+    //         setValues({...values, loading: false})
+    //     } catch (error) {
+    //         console.log("Image Remove failed",error)
+    //         setValues({...values, loading: false})
+    //         toast.error("Image Remove failed")
+    //     }
+    // }
 
     return (
         <InstructorRoute>
@@ -102,7 +103,9 @@ const CourseEdit = () =>{
             setValues={setValues}
             preview={preview}
             uploadButtonText={uploadButtonText}
-            handleImageRemove={handleImageRemove}
+            // handleImageRemove={handleImageRemove}
+            handleImageRemove={(dummy) => dummy}
+            editPage={true}
             />
             {/* <pre>{JSON.stringify(values)}</pre> */}
         </div>

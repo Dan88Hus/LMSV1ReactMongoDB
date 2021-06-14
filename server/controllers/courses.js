@@ -176,3 +176,25 @@ exports.addLesson = async(req, res) =>{
         return res.status(400).send("Add lesson is failed")
     }
 }
+exports.update = async(req,res) =>{
+    // console.log("create course")
+    // console.log(req.body)
+    // return
+    const {slug} = req.params
+    // console.log(slug)
+    try {
+        const course = await Course.findOne({
+            slug
+        }).exec()
+        // console.log(course)
+        if(req.user._id != course.instructor){
+            return res.status(400).send("unauthorized to modify")
+        }   
+        const updated = await Course.findOneAndUpdate({slug}, req.body, {new:true}).exec()
+
+        res.json(updated)
+    } catch (error) {
+        console.log("Course update server Error")
+        return res.status(400).send("Course update failed")
+    }
+}

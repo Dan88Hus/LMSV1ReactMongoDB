@@ -8,7 +8,7 @@ const {requireSignin, isInstructor} = require('../middlewares/index')
 
 //import controllers
 const {uploadImage, removeImage, create,
-    read, uploadVideo, removeVideo, addLesson} = require('../controllers/courses')
+    read, uploadVideo, removeVideo, addLesson, update} = require('../controllers/courses')
 
 
 //
@@ -19,5 +19,7 @@ router.get("/course/:slug", read)
 router.post("/course/video-upload/:instructorId", requireSignin, formidable(), uploadVideo )
 router.post("/course/video-remove/:instructorId",requireSignin, removeVideo )
 router.post("/course/lesson/:slug/:instructorId", requireSignin, addLesson)
+router.put("/course/:slug", requireSignin, update)
+
 
 module.exports = router

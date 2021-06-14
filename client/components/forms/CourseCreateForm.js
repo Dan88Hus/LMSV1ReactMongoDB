@@ -2,13 +2,16 @@ import {Select, Button, Avatar, Badge} from "antd"
 
 const {Option} = Select
 
-const CourseCreateForm = ({handleChange,handleImage,handleSubmit, values, setValues, preview, uploadButtonText, handleImageRemove})=> {
+const CourseCreateForm = ({handleChange,handleImage,handleSubmit, values, setValues, preview, uploadButtonText, handleImageRemove
+    ,editPage = false})=> {
     const children=[]
     for (let i=9.99; i<= 100.99; i++){
         children.push(<Option key={i.toFixed(2)}>${i.toFixed(2)}</Option>)
     }
 
     return (
+        <>
+        {values && ( 
         <form onSubmit={handleSubmit} >
         <div className="form-group">
             <input type="text" name="name" className="mb-2 form-control"
@@ -77,8 +80,9 @@ const CourseCreateForm = ({handleChange,handleImage,handleSubmit, values, setVal
             style={{cursor: "pointer"}}
             ><Avatar width={200} src={preview}/></Badge>
             </div>
-
             )}
+            {editPage &&  values.image && (
+            <Avatar width={200} src={values.image.Location}/>)}
         </div>
 
         <div className="row">
@@ -97,7 +101,8 @@ const CourseCreateForm = ({handleChange,handleImage,handleSubmit, values, setVal
             </div>
         </div>
     </form>
-
+        )}
+        </>
     )
 }
 export default CourseCreateForm
