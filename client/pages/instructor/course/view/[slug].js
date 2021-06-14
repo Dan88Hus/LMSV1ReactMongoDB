@@ -123,7 +123,7 @@ const CourseView = ()=>{
                    
                    <div className="text-end">
                         <Tooltip title="Edit">
-                            <EditOutlined style={{cursor: "pointer"}} className="h5 mr-4"/>
+                            <EditOutlined onClick={() => router.push(`/instructor/course/edit/${slug}`)} style={{cursor: "pointer"}} className="h5 mr-4"/>
                         </Tooltip>
                         <Tooltip title="Publish">
                             <CheckOutlined style={{cursor: "pointer"}} className="h5 ml-4"/>

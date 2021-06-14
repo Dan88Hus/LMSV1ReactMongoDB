@@ -1,13 +1,21 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import axios from 'axios'
-import InstructorRoute from '../../../components/routes/InstructorRoute'
-import CourseCreateForm from '../../../components/forms/CourseCreateForm'
+import InstructorRoute from '../../../../components/routes/InstructorRoute'
+import CourseCreateForm from '../../../../components/forms/CourseCreateForm'
 import Resizer from 'react-image-file-resizer'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
 
-const CourseCreate = () =>{
+const CourseEdit = () =>{
     const router = useRouter()
+
+    const {slug} = router.query // params degil
+
+    useEffect(async()=>{
+        const {data} = await axios.get(`/api/course/${slug}`)
+        //useEffect calistiginda slug henuz aktif degil ondan router.params dan slugi alacaz ve when the slug changes run the useEffect
+        setValues(data)
+    },[slug])
 
     const [values, setValues] = useState({
         name: "",
@@ -84,7 +92,7 @@ const CourseCreate = () =>{
 
     return (
         <InstructorRoute>
-        <h1 className="text-center">Modify Course</h1>
+        <h1 className="text-center">Edit Course</h1>
         <div className="p-3">
             <CourseCreateForm 
             handleSubmit={handleSubmit}
@@ -98,7 +106,8 @@ const CourseCreate = () =>{
             />
             {/* <pre>{JSON.stringify(values)}</pre> */}
         </div>
+        {/* {JSON.stringify(values,null,4)} */}
         </InstructorRoute>
     )
 }
-export default CourseCreate
+export default CourseEdit

@@ -138,6 +138,14 @@ AWS s3 VIDEO upload and lessons
     only instructor can upload and delete videos
     add lesson 
     rendering lessons as list items 
+Update course 
+    course edit page ,
+    reuse component to update course 
+    update course 
+    list of lessons on edit page 
+    dragable items 
+    drag and drop lessons to reorder 
+    
 
 
     
