@@ -98,6 +98,11 @@ exports.read = async(req,res) =>{
 
 exports.uploadVideo = async(req, res)=> {
     try {
+        // console.log("req.user._id:",req.user._id )
+        // console.log("req.params.instructorId:",req.params.instructorId )
+        if(req.user._id != req.params.instructorId){
+            return res.status(400).send("unauthorized to modify")
+        }
         const {video} = req.files
         // req.files formidable middleware deen dolayi geliyor
 
@@ -132,6 +137,9 @@ exports.uploadVideo = async(req, res)=> {
 exports.removeVideo = async(req, res) =>{
 
     try {
+        if(req.user._id != req.params.instructorId){
+            return res.status(400).send("unauthorized to modify")
+        }
         const {video} = req.body
         // console.log("-----body---",req.body)
         // console.log("=====video====", video)
