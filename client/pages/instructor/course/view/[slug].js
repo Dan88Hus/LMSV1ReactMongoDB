@@ -2,11 +2,12 @@ import {useState, useEffect} from 'react'
 import {useRouter} from 'next/router'
 import InstructorRoute from '../../../../components/routes/InstructorRoute'
 import axios from 'axios'
-import {Avatar, Tooltip, Button, Modal} from 'antd'
+import {Avatar, Tooltip, Button, Modal, List} from 'antd'
 import {EditOutlined, CheckOutlined} from '@ant-design/icons'
 import ReactMarkDown from 'react-markdown'
 import AddLessonForm from '../../../../components/forms/AddLessonForm'
 import {toast} from "react-toastify"
+import Item from 'antd/lib/list/Item'
 
 const CourseView = ()=>{
     const [course,setCourse] = useState({})
@@ -162,6 +163,22 @@ const CourseView = ()=>{
                         progress={progress}
                         handleVideoRemove={handleVideoRemove}/>
                     </Modal>
+                    <di className="row mt-1">
+                        <div className="col">
+                            <h4 className="text-start">Lessons:</h4>
+                        </div>
+                        {/* //dataSource in List component , it map each item */}
+                        <List itemLayout="horizantal" dataSource={course && course.lessons}
+                        renderItem={(item, index)=>(
+                            <Item>
+                                <Item.Meta avatar={<Avatar>{index+1}</Avatar>}
+                                title={item.title}>
+                                </Item.Meta>
+                            </Item>
+                        )}>
+
+                        </List>
+                    </di>
                     </div>
                     }
                     {/* {JSON.stringify(course.description)} */}
