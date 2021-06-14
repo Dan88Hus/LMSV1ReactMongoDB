@@ -1,3 +1,4 @@
+import {List, Avatar} from 'antd'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import InstructorRoute from '../../../../components/routes/InstructorRoute'
@@ -5,6 +6,8 @@ import CourseCreateForm from '../../../../components/forms/CourseCreateForm'
 import Resizer from 'react-image-file-resizer'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
+
+const {Item} = List
 
 const CourseEdit = () =>{
     const router = useRouter()
@@ -14,7 +17,11 @@ const CourseEdit = () =>{
     useEffect(async()=>{
         const {data} = await axios.get(`/api/course/${slug}`)
         //useEffect calistiginda slug henuz aktif degil ondan router.params dan slugi alacaz ve when the slug changes run the useEffect
-        setValues(data)
+        if(data && data.image){
+            setImage(data.image)
+            setValues(data)
+            // console.log(data)
+        }
     },[slug])
 
     const [values, setValues] = useState({
@@ -25,6 +32,7 @@ const CourseEdit = () =>{
         uploading: false,
         paid: true,
         loading: false,
+        lessons: [],
     })
     const [image, setImage] = useState({})
     const [preview, setPreview] = useState("")
@@ -69,30 +77,31 @@ const CourseEdit = () =>{
         try {
             const {data} = await axios.put(`/api/course/${slug}`, {...values, image})
             toast.success("Course updated")
-            // router.push("/instructor")
+            router.push("/instructor")
         } catch (error) {
             console.log("update course send values to server error", error.response.data)
             toast.error("update course failed")
         }  }
 
-    // const handleImageRemove = async()=>{
-    //     console.log("REMOVE IMAGE CLICKED")
-    //     try {
-    //         setValues({...values, loading: true})
-    //         const res = await axios.post("/api/course/remove-image", {image})
-    //         setImage({})
-    //         setPreview("")
-    //         setUploadButtonText("Upload Image") 
-    //         setValues({...values, loading: false})
-    //     } catch (error) {
-    //         console.log("Image Remove failed",error)
-    //         setValues({...values, loading: false})
-    //         toast.error("Image Remove failed")
-    //     }
-    // }
+    const handleImageRemove = async()=>{
+        console.log("REMOVE IMAGE CLICKED")
+        try {
+            setValues({...values, loading: true})
+            const res = await axios.post("/api/course/remove-image", {image})
+            setImage({})
+            setPreview("")
+            setUploadButtonText("Upload Image") 
+            setValues({...values, loading: false})
+        } catch (error) {
+            console.log("Image Remove failed",error)
+            setValues({...values, loading: false})
+            toast.error("Image Remove failed")
+        }
+    }
 
     return (
         <InstructorRoute>
+
         <h1 className="text-center">Edit Course</h1>
         <div className="p-3">
             <CourseCreateForm 
@@ -103,13 +112,30 @@ const CourseEdit = () =>{
             setValues={setValues}
             preview={preview}
             uploadButtonText={uploadButtonText}
-            // handleImageRemove={handleImageRemove}
-            handleImageRemove={(dummy) => dummy}
+            handleImageRemove={handleImageRemove}
             editPage={true}
             />
-            {/* <pre>{JSON.stringify(values)}</pre> */}
         </div>
-        {/* {JSON.stringify(values,null,4)} */}
+<hr />
+        <div className="container">
+        <div className="row mt-1">
+                        <div className="col">
+                            <h4 className="text-start">Lessons:</h4>
+                        </div>
+                        {/* //dataSource in List component , it map each item */}
+                        <List itemLayout="horizantal" dataSource={values && values.lessons}
+                        renderItem={(item, index)=>(
+                            <Item>
+                                <Item.Meta avatar={<Avatar>{index+1}</Avatar>}
+                                title={item.title}>
+                                </Item.Meta>
+                            </Item>
+                        )}>
+
+                        </List>
+                    </div>
+            </div>
+
         </InstructorRoute>
     )
 }

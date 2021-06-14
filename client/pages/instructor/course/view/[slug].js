@@ -163,7 +163,8 @@ const CourseView = ()=>{
                         progress={progress}
                         handleVideoRemove={handleVideoRemove}/>
                     </Modal>
-                    <di className="row mt-1">
+
+                    <div className="row mt-1">
                         <div className="col">
                             <h4 className="text-start">Lessons:</h4>
                         </div>
@@ -178,7 +179,7 @@ const CourseView = ()=>{
                         )}>
 
                         </List>
-                    </di>
+                    </div>
                     </div>
                     }
                     {/* {JSON.stringify(course.description)} */}
