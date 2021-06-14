@@ -98,7 +98,26 @@ const CourseEdit = () =>{
             toast.error("Image Remove failed")
         }
     }
+    const handleDrag = (e, index)=>{
+        // console.log("handleDrag index", index)
+        e.dataTransfer.setData("itemIndex", index)
+    }
 
+    const handleDrop = async(e, index) => {
+        // console.log("handleDrop index", index)
+        const movingItemIndex = e.dataTransfer.getData("itemIndex")
+        const targetItemIndex = index
+        let allLessons = values.lessons
+        let movingItem = allLessons[movingItemIndex] //clicked or dragged item reorder
+        allLessons.splice(movingItemIndex,1) //to remove item
+        allLessons.splice(targetItemIndex,0,movingItem) //to add item //0 indicates number of item to be removed
+        setValues({...values, lessons: [...allLessons]})
+
+        const {data} = await axios.put(`/api/course/${slug}`, {...values, image})
+        toast.success("Lessons re-order is updated")
+        // router.push("/instructor")
+
+    }
     return (
         <InstructorRoute>
 
@@ -116,26 +135,27 @@ const CourseEdit = () =>{
             editPage={true}
             />
         </div>
-<hr />
-        <div className="container">
-        <div className="row mt-1">
-                        <div className="col">
-                            <h4 className="text-start">Lessons:</h4>
-                        </div>
-                        {/* //dataSource in List component , it map each item */}
-                        <List itemLayout="horizantal" dataSource={values && values.lessons}
-                        renderItem={(item, index)=>(
-                            <Item>
-                                <Item.Meta avatar={<Avatar>{index+1}</Avatar>}
-                                title={item.title}>
-                                </Item.Meta>
-                            </Item>
-                        )}>
-
-                        </List>
-                    </div>
+        <hr />
+            <div className="container">
+            <div className="row mt-1">
+            <div className="col">
+                <h4 className="text-start">Lessons:</h4>
             </div>
-
+            {/* //dataSource in List component , it map each item */}
+            <List onDragOver={e => e.preventDefault()}
+            itemLayout="horizantal" dataSource={values && values.lessons}
+            renderItem={(item, index)=>(
+                <Item draggable onDragStart={e => handleDrag(e, index)}
+                onDrop={(e) => handleDrop(e, index)}
+                >
+                    <Item.Meta avatar={<Avatar>{index+1}</Avatar>}
+                    title={item.title}>
+                    </Item.Meta>
+                </Item>
+            )}>
+            </List>
+            </div>
+            </div>
         </InstructorRoute>
     )
 }
