@@ -7,7 +7,6 @@ import {EditOutlined, CheckOutlined} from '@ant-design/icons'
 import ReactMarkDown from 'react-markdown'
 import AddLessonForm from '../../../../components/forms/AddLessonForm'
 import {toast} from "react-toastify"
-import { countDocuments } from '../../../../../server/models/user'
 
 const CourseView = ()=>{
     const [course,setCourse] = useState({})
@@ -30,16 +29,13 @@ const CourseView = ()=>{
         try {
             setUploading(true)
             console.log("handleRemoveClicked")
-            const {data} = await axios.post("/api/course/remove=video",{
-                values: video
-            })
+            const {data} = await axios.post("/api/course/video-remove", {video: values.video})
             console.log(data)
             setValues({...values, video:{}})
             setProgress(0)
             setUploading(false)
             setUploadButtonText("Upload video")
             toast.success("Video deleted")
-
         } catch (error) {
             console.log(error.message)
             setUploading(false)
