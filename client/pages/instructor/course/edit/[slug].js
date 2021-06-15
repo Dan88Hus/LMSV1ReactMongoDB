@@ -1,4 +1,4 @@
-import {List, Avatar} from 'antd'
+import {List, Avatar, Modal} from 'antd'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import InstructorRoute from '../../../../components/routes/InstructorRoute'
@@ -6,7 +6,9 @@ import CourseCreateForm from '../../../../components/forms/CourseCreateForm'
 import Resizer from 'react-image-file-resizer'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
-import{DeleteOutlined} from '@ant-design/icons'
+import {DeleteOutlined} from '@ant-design/icons'
+import UpdateLessonForm from '../../../../components/forms/updateLessonForm'
+
 
 const {Item} = List
 
@@ -38,6 +40,13 @@ const CourseEdit = () =>{
     const [image, setImage] = useState({})
     const [preview, setPreview] = useState("")
     const [uploadButtonText, setUploadButtonText] = useState("Upload Image")
+    //state for lesson update
+    const [visible, setVisible] = useState(false)
+    const [current, setCurrent] = useState({})
+    const [uploadVideoButtonText, setUploadVideoButtonText] = useState("Upload Video")
+    const [progress, setProgress] = useState(0)
+    const [uploading, setUploading] = useState(false)
+
 
     const handleChange = (e)=>{
         setValues({...values, [e.target.name]: e.target.value})
@@ -139,6 +148,19 @@ const CourseEdit = () =>{
         }
 
     }
+    const lessonClik = (item) =>{
+        setVisible(true)
+        setCurrent(item)
+    }
+
+    //lesson update functions
+    const handleVideoUpload = async()=>{
+        console.log("handle video upload")
+    }
+
+    const handleUpdateLesson = async()=>{
+        console.log("handleUpdateLesson")
+    }
     return (
         <InstructorRoute>
 
@@ -169,7 +191,9 @@ const CourseEdit = () =>{
                 <Item draggable onDragStart={e => handleDrag(e, index)}
                 onDrop={(e) => handleDrop(e, index)}
                 >
-                    <Item.Meta avatar={<Avatar>{index+1}</Avatar>}
+                    <Item.Meta onClick={()=> lessonClik(item)}
+                    avatar={<Avatar>{index+1}</Avatar>}
+                    style={{cursor: "pointer"}}
                     title={item.title}>
                     </Item.Meta>
                     <DeleteOutlined onClick={()=>handleDelete(index)}
@@ -180,6 +204,25 @@ const CourseEdit = () =>{
             </List>
             </div>
             </div>
+            {/* //Modal doesnot have to be inside of any div ,can be in anywhere */}
+            {/* ama modalin icin de gostereceklerimizi modal icnde yazziyoruz */}
+            <Modal
+            title="Update Lesson"
+            centered
+            visible={visible}
+            onCancel={()=> setVisible(false)}
+            footer={false}
+            > 
+            <UpdateLessonForm current={current}
+            setCurrent={setCurrent}
+            handleVideoUpload={handleVideoUpload}
+            handleUpdateLesson={handleUpdateLesson}
+            uploadVideoButtonText={uploadVideoButtonText}
+            progress={progress}
+            uploading={uploading}
+            
+            />
+             </Modal>
         </InstructorRoute>
     )
 }
