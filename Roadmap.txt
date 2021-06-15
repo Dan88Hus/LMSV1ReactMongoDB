@@ -145,6 +145,17 @@ Update course
     list of lessons on edit page 
     dragable items 
     drag and drop lessons to reorder 
+lesson update and delete 
+    delete lesson client 
+    delete lesson server 
+    update lesson modal 
+    update lesson component 
+    video preview and switch button 
+    remove and upload new video on update 
+    update lesson request client 
+    update lesson server 
+    
+
     
 
 

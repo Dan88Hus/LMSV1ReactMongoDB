@@ -6,6 +6,7 @@ import CourseCreateForm from '../../../../components/forms/CourseCreateForm'
 import Resizer from 'react-image-file-resizer'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
+import{DeleteOutlined} from '@ant-design/icons'
 
 const {Item} = List
 
@@ -118,6 +119,26 @@ const CourseEdit = () =>{
         // router.push("/instructor")
 
     }
+
+    const handleDelete = async(index) =>{
+        try {
+            const answer = window.confirm("are you sure to delete?")
+            console.log("lesson delete clicked")
+            if(!answer){
+                return
+            }
+            let allLessons = values.lessons
+            const removed = allLessons.splice(index,1) // this gives individual item which is removed
+            setValues({...values, lessons: allLessons})
+            const {data} = await axios.put(`/api/course/${slug}/${removed[0]._id}`)
+            toast.success("lesson is deleted")
+
+        } catch (error) {
+            console.log(error.message)
+            toast.error(error.message)
+        }
+
+    }
     return (
         <InstructorRoute>
 
@@ -151,6 +172,9 @@ const CourseEdit = () =>{
                     <Item.Meta avatar={<Avatar>{index+1}</Avatar>}
                     title={item.title}>
                     </Item.Meta>
+                    <DeleteOutlined onClick={()=>handleDelete(index)}
+                    className="text-danger float-end"
+                    />
                 </Item>
             )}>
             </List>

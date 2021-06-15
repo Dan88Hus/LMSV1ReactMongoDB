@@ -140,7 +140,7 @@ const CourseView = ()=>{
                     </div>
                     <Button
                     onClick={()=> setVisible(true)}
-                    clasName="col-md-6 offset-md-3 text-center"
+                    className="col-md-6 offset-md-3 text-center"
                     type="primary"
                     shape="round"
                     size="large"
