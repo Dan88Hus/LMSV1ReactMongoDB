@@ -218,5 +218,13 @@ exports.updateLesson = async(req, res) =>{
     if(req.user._id != course.instructor._id){
         return res.status(400).send("unauthorized to modify")
     }
-
+    const {title, content, video, free_preview, _id} = req.body 
+    const updated = await Course.updateOne({"lessons._id": _id}, {
+        $set: { "lessons.$.title": title,
+            "lessons.$.content": content,
+            "lessons.$.video": video,
+            "lessons.$.free_preview": free_preview,}
+    }, {new: true}).exec()
+    // console.log(updated)
+    res.json({ok: true})
 }

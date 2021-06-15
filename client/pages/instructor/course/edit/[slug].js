@@ -186,10 +186,18 @@ const CourseEdit = () =>{
         const {data} = await axios.put(`/api/course/lesson/${slug}/${current._id}`, current)
         setVisible(false)
         setUploadVideoButtonText("Upload Video")
-        setCourse(data)
-        toast.success("lesson updated")
+        if(data.ok){
+            let arr = values.lessons
+            const index = arr.findIndex((el)=> el._id === current._id)
+                arr[index] = current
+                setValues({...values, lessons: arr})
+                toast.success("lesson updated")
+        
+
+        }
 
     }
+
     return (
         <InstructorRoute>
 
