@@ -151,10 +151,11 @@ lesson update and delete
     update lesson modal 
     update lesson component 
     video preview and switch button 
+        npm i react-player
     remove and upload new video on update 
     update lesson request client 
     update lesson server 
-    
+
 
     
 

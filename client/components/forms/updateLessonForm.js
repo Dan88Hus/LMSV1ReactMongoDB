@@ -1,6 +1,7 @@
 import { CloseCircleFilled } from "@ant-design/icons"
-import {Button, Progress} from "antd"
+import {Button, Progress, Switch} from "antd"
 import {useState, useEffect} from 'react'
+import ReactPlayer from 'react-player'
 
 const UpdateLessonForm = ({current, setCurrent,
      handleVideoUpload, handleUpdateLesson,
@@ -14,14 +15,14 @@ const UpdateLessonForm = ({current, setCurrent,
         <div className="container pt-3">
              <form onSubmit={handleUpdateLesson} className="">
                  <input type="text" className="form-control square"
-                 onChange={e => setValues({...current, title: e.target.value})}
+                 onChange={e => setCurrent({...current, title: e.target.value})}
                  value={current.title}
                  autoFocus
                  required
                  />
 
                  <textarea className="form-control mt-3" cols="7" rows="7"
-                 onChange={e => setValues({...current, content:e.target.value})}
+                 onChange={e => setCurrent({...current, content:e.target.value})}
                  value={current.content}
                  ></textarea>
 
@@ -32,7 +33,11 @@ const UpdateLessonForm = ({current, setCurrent,
                 </label>
                 {!uploading && current.video && current.video.Location && (
                    <div className="justify-content-center">
-                       show video player
+                       <ReactPlayer 
+                       url={current.video.Location}
+                       width="410px"
+                       height="240px"
+                       controls/>
                    </div>
                 )}
                 </div>
@@ -45,8 +50,14 @@ const UpdateLessonForm = ({current, setCurrent,
                     />
                 ) }
                 <br />
-                <div className="justify-content-between">
-                    <span className="badge">Preview</span>
+                {/* {JSON.stringify(current)} */}
+                <div className="row justify-content-between">
+                    <div className="col h6 text-muted">Preview</div>
+                    <Switch className="col-auto float-end"
+                    disabled={uploading}
+                    defaultChecked={current.free_preview}
+                    name="free_preview"
+                    onChange={v => setCurrent({...current, free_preview: v})}/>
                 </div>
 
                  <Button

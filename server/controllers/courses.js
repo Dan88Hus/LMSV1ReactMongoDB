@@ -158,7 +158,7 @@ exports.removeVideo = async(req, res) =>{
             res.send({ok: true})
         })
         } catch (error) {
-            console.log(error.message)
+            console.log("remove video",error.message)
         }
 
 }
@@ -210,4 +210,13 @@ exports.removeLesson = async(req, res) =>{
     } catch (error) {
         console.log("RemoveLesson is failed for server",error.message)
     }
+}
+exports.updateLesson = async(req, res) =>{
+    // console.log("update lesson")
+    const {slug} = req.params
+    const course = await Course.findOne({slug}).select("instructor").exec()
+    if(req.user._id != course.instructor._id){
+        return res.status(400).send("unauthorized to modify")
+    }
+
 }

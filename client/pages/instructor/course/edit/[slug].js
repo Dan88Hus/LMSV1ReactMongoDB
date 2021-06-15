@@ -154,12 +154,41 @@ const CourseEdit = () =>{
     }
 
     //lesson update functions
-    const handleVideoUpload = async()=>{
-        console.log("handle video upload")
+    const handleVideoUpload = async(e)=>{
+        // console.log("handle video upload")
+        //remove previous one 
+        if(current.video && current.video.Location){
+            const res = await axios.post(`/api/course/video-remove/${values.instructor._id}`, {video: current.video})
+            console.log("removed", res)
+        }
+        //uploading new one
+        const file = e.target.files[0]
+        setUploadVideoButtonText(file.name)
+        setUploading(true)
+        // send data as form data
+        const videoData = new FormData()
+        videoData.append("video", file)
+        videoData.append("courseId", values._id)
+        // save progress bar send vide as formData
+        const {data} = await axios.post(`/api/course/video-upload/${values.instructor._id}`, videoData, {
+            // to keep track of progress
+            onUploadProgress: (e) => setProgress(Math.round(100*e.loaded)/ e.total)
+
+        })
+        setCurrent({...current, video: data})
+        setUploading(false)
+        toast.success("new video Uploaded")
     }
 
-    const handleUpdateLesson = async()=>{
-        console.log("handleUpdateLesson")
+    const handleUpdateLesson = async(e)=>{
+        // console.log("handleUpdateLesson")
+        e.preventDefault()
+        const {data} = await axios.put(`/api/course/lesson/${slug}/${current._id}`, current)
+        setVisible(false)
+        setUploadVideoButtonText("Upload Video")
+        setCourse(data)
+        toast.success("lesson updated")
+
     }
     return (
         <InstructorRoute>
@@ -220,7 +249,7 @@ const CourseEdit = () =>{
             uploadVideoButtonText={uploadVideoButtonText}
             progress={progress}
             uploading={uploading}
-            
+
             />
              </Modal>
         </InstructorRoute>
