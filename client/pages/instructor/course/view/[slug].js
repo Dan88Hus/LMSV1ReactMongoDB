@@ -96,6 +96,34 @@ const CourseView = ()=>{
         }
     }
 
+    const handlePublish = async(e, courseId) => {
+        // console.log("handlePublish")
+        try {
+            let answer = window.confirm("are you sure?")
+            if (!answer) return
+            const {data} = await axios.put(`/api/course/publish/${courseId}`)
+            setCourse(data)
+            toast.success("Course is Published")
+        } catch (error) {
+            console.log(error.message)
+            toast.error(error.message)
+        }
+    }
+
+    const handleUnPublish = async(e, courseId) =>{
+        // console.log("handleUNPublish")
+        try {
+            let answer = window.confirm("are you sure?")
+            if (!answer) return
+            const {data} = await axios.put(`/api/course/unpublish/${courseId}`)
+            setCourse(data)
+            toast.success("Course is Unpublished")
+        } catch (error) {
+            toast.error(error.message)
+            
+        }
+
+    }
 
     return (
         <InstructorRoute>
@@ -125,9 +153,12 @@ const CourseView = ()=>{
                         <Tooltip title="Edit">
                             <EditOutlined onClick={() => router.push(`/instructor/course/edit/${slug}`)} style={{cursor: "pointer"}} className="h5 mr-4"/>
                         </Tooltip>
-                        <Tooltip title="Publish">
-                            <CheckOutlined style={{cursor: "pointer"}} className="h5 ml-4"/>
+                        <Tooltip title={course.published ? "UnPublish" : "Publish" }>
+                            <CheckOutlined 
+                            onClick={course.published ? ((e)=> handleUnPublish(e, course._id)) : ((e)=> handlePublish(e, course._id)) }
+                            style={{cursor: "pointer"}} className="h5 ml-4"/>
                         </Tooltip>
+                        {/* {JSON.stringify(course.published)} */}
                     </div>
                 </div>
                 </div>

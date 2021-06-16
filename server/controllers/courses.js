@@ -228,3 +228,33 @@ exports.updateLesson = async(req, res) =>{
     // console.log(updated)
     res.json({ok: true})
 }
+exports.publishCourse = async(req,res) =>{
+    //
+    try {
+        const {courseId} = req.params 
+        const course = await Course.findById(courseId).select("instructor").exec()
+        if(req.user._id != course.instructor._id){
+            return res.status(400).send("unauthorized to modify")
+        }
+        const updated = await Course.findByIdAndUpdate(courseId, {published : true}, {new:true}).exec()
+        res.json(updated)
+    } catch (error) {
+        console.log(error.message)
+        return res.status(400).send("publish course server error")
+    }
+}
+exports.unpublishCourse = async(req,res)=>{
+    //
+    try {
+        const {courseId} = req.params 
+        const course = await Course.findById(courseId).select("instructor").exec()
+        if(req.user._id != course.instructor._id){
+            return res.status(400).send("unauthorized to modify")
+        }
+        const updated = await Course.findByIdAndUpdate(courseId, {published : false}, {new:true}).exec()
+        res.json(updated)
+    } catch (error) {
+        console.log(error.message)
+        return res.status(400).send("unpublish course server error")
+    }
+}
