@@ -258,3 +258,12 @@ exports.unpublishCourse = async(req,res)=>{
         return res.status(400).send("unpublish course server error")
     }
 }
+exports.courses = async(req,res) =>{
+    try {
+        const all = await Course.find({published: true}).populate("instructor", "_id name").exec()
+        res.json(all)
+    } catch (error) {
+        console.log(error.message)
+        return res.status(400).send("find published courses server error")
+    }
+}

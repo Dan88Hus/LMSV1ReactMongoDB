@@ -10,11 +10,12 @@ const {requireSignin, isInstructor} = require('../middlewares/index')
 const {uploadImage, removeImage, create,
     read, uploadVideo, removeVideo, addLesson,
      update, removeLesson, updateLesson,
-     publishCourse, unpublishCourse} = require('../controllers/courses')
+     publishCourse, unpublishCourse, courses} = require('../controllers/courses')
 
 //publish/Unpublish
 router.put("/course/publish/:courseId", requireSignin, publishCourse)
 router.put("/course/unpublish/:courseId", requireSignin, unpublishCourse)
+router.get("/courses/", courses)
 
 //
 router.post('/course/upload-image', uploadImage)
