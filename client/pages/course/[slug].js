@@ -1,7 +1,8 @@
-// import {List, Avatar, Modal} from 'antd'
+import {Badge} from 'antd'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import {useRouter} from 'next/router'
+import {currentFormatter} from '../../utils/helper'
 
 
 // import InstructorRoute from '../../../../components/routes/InstructorRoute'
@@ -17,7 +18,10 @@ import {useRouter} from 'next/router'
 const SingleCourse = ({course}) =>{
     const router = useRouter()
     const {slug} = router.query // params degil
+    const {name, description, instructor, updatedAt, 
+        lessons, image, price, paid, category} = course
 
+    
 
 
     return (
@@ -25,10 +29,32 @@ const SingleCourse = ({course}) =>{
 
             <div className="container-fluid">
             <div className="row mt-1">
-            <div className="col">
-                <h4 className="text-start">Lessons:</h4>
-                {JSON.stringify(course)}
-            </div>
+                <div className="col-md-8">
+                    {/* tirtle */} {/* description  category author price updatedAt */}
+                    <h1 className="text-muted font-weight-bold">{name}</h1>
+                    <p className="lead">{description && description.substring(0, 160)}....</p>
+                    <Badge
+                        count={category}
+                    />
+                    <p className="text-muted mt-1">
+                        Created By: {instructor.name}
+                    </p>
+                    <p>Last updated: {new Date(updatedAt).toLocaleDateString()}</p>
+                    <h4 className="text-muted">
+                        {paid ? currentFormatter({
+                            amount: price,
+                            currency: "usd"
+                        }) : "Free"}
+                    </h4>
+                
+                </div> 
+                <div className="col-md-4">
+                    {/* show video preview course image */}
+                    {/* enroll button */}
+                    <p>course image</p>
+                    <button className="btn btn-success">Enroll</button>
+
+                </div>
 
             </div>
             </div>
