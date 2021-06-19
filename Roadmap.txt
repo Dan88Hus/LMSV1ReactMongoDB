@@ -162,7 +162,20 @@ publishing courses
     published courses server 
     published client 
     ant card component to display courses 
+Single render courses for SEO 
+        when we look to sourses of page, at current time it looks like standart react app
+        as we can not find our price name and etc.. so google cant find as well
     
+    SEO 
+    fetch single course 
+    display single course 
+    video or image preview 
+    single course jumbotron 
+    course preview modal 
+    show course lesson 
+    show lesson preview 
+    
+        
 
 
     
