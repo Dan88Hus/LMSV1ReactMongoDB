@@ -12,7 +12,7 @@ const SingleCourseView = ({course,
     loading,
     setLoading,
     handlePaidEnrollment,
-    handleFreeEnrollment}) => {
+    handleFreeEnrollment, setEnrolled, enrolled}) => {
     
     const {name, description, instructor, updatedAt, 
         lessons, image, price, paid, category} = course
@@ -62,7 +62,8 @@ return(
             ) : (
                 <Button type="dashed" shape="round" size="large" disabled={loading}
                 onClick={paid ? handlePaidEnrollment : handleFreeEnrollment}
-                className="mt-2 btn btn-success">{user ? "Enroll" : "Login to Enroll"}</Button>
+                className="mt-2 btn btn-success">
+                    {user ? enrolled.status ? "Go to Course" : "Enroll" : "Login to Enroll"}</Button>
             )}
         
 

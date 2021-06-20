@@ -5,9 +5,9 @@ import SingleCourseView from '../../components/cards/SingleCourseView'
 import PreviewModal from '../../components/modal/PreviewModal'
 import SingleCourseLessons from '../../components/cards/SingleCourseLessons'
 import {Context} from '../../context/index'
+import {toast} from 'react-toastify'
 
 
-// import {toast} from 'react-toastify'
 
 const SingleCourse = ({course}) =>{
     const router = useRouter()
@@ -18,14 +18,40 @@ const SingleCourse = ({course}) =>{
     const [preview, setPreview] = useState("")
     const [loading, setLoading] = useState(false)
     const {state: {user}} = useContext(Context)
+    const [enrolled, setEnrolled] = useState({})
+    
 
+    useEffect(()=>{
+        if(user && course){
+            checkEnrollment()
+        }
+    },[user, course])
+
+    const checkEnrollment = async () =>{
+        const {data} = await axios.get(`/api/check-enrollment/${course._id}`)
+        console.log(data)
+        setEnrolled(data)
+    }
 
     const handlePaidEnrollment = () => {
         console.log("handlePayment Enrollment")
     }
 
-    const handleFreeEnrollment = () => {
-        console.log("handleFreeEnrollment")
+    const handleFreeEnrollment = async (e) => {
+        // console.log("handleFreeEnrollment")
+        e.preventDefault()
+        try {
+            if(!user) router.push("/login")
+            if(enrolled.status) return router.push(`/user/course/${enrolled.course.slug}`)
+            setLoading(true)
+            const {data} = await axios.post(`/api/free-enrollment/${course._id}`)
+            toast.success(data.message)
+            setLoading(false)
+            router.push(`/user/course/${data.course.slug}`)
+        } catch (error) {
+            toast.error("handeleFREEenrollment Error")
+            setLoading(false)
+        }
     }
         
     return (
@@ -38,6 +64,8 @@ const SingleCourse = ({course}) =>{
         setLoading={setLoading}
         handlePaidEnrollment={handlePaidEnrollment}
         handleFreeEnrollment={handleFreeEnrollment}
+        enrolled={enrolled}
+        setEnrolled={setEnrolled}
         />
 
         <PreviewModal showModal={showModal} 

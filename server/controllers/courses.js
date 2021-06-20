@@ -271,13 +271,35 @@ exports.courses = async(req,res) =>{
 
 exports.checkEnrollment = async (req,res) =>{
     const {courseId} = req.params
+    console.log(courseId)
     const user = await User.findById(req.user._id).exec()
     let ids =[]
-    for (let i =0; i< user.courses.length; i++){
-        ids.push(user.courses[i].toString())
+    let length = user.courses && user.courses.length
+    if(length){
+        for (let i =0; i< length; i++){
+            ids.push(user.courses[i].toString())
+        }
     }
+
     res.json({ 
         status: ids.includes(courseId), //true or false
         course: await Course.findById(courseId).exec() //Dont know why we need this
     })
+}
+exports.freeEnrollment = async (req,res) => {
+    try { 
+        const course = await Course.findById(req.params.courseId).exec()
+        if(course.paid) return
+        const result = await User.findByIdAndUpdate(req.user._id, {
+            $addToSet: { courses: course._id}
+        }, {new:true}).exec()
+        //addtoset method prevent duplicates in array instead of set method
+        res.json({
+            message: "Congratulations to enrollment",
+            course: course
+        })
+    } catch (error) {
+        console.log("Free enrollment error",error.message)
+        res.status(404).send("Enrollment create failed")
+    }
 }
