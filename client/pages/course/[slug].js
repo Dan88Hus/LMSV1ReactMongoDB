@@ -1,10 +1,10 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
 import axios from 'axios'
 import {useRouter} from 'next/router'
 import SingleCourseView from '../../components/cards/SingleCourseView'
 import PreviewModal from '../../components/modal/PreviewModal'
 import SingleCourseLessons from '../../components/cards/SingleCourseLessons'
-
+import {Context} from '../../context/index'
 
 
 // import {toast} from 'react-toastify'
@@ -14,14 +14,31 @@ const SingleCourse = ({course}) =>{
     const {slug} = router.query // params degil
 
     
-        const [showModal, setShowModal] = useState(false)
-        const [preview, setPreview] = useState("")
+    const [showModal, setShowModal] = useState(false)
+    const [preview, setPreview] = useState("")
+    const [loading, setLoading] = useState(false)
+    const {state: {user}} = useContext(Context)
+
+
+    const handlePaidEnrollment = () => {
+        console.log("handlePayment Enrollment")
+    }
+
+    const handleFreeEnrollment = () => {
+        console.log("handleFreeEnrollment")
+    }
         
     return (
         <>
         <SingleCourseView course={course}
         showModal={showModal} setShowModal={setShowModal}
-        preview={preview} setPreview={setPreview}/>
+        preview={preview} setPreview={setPreview}
+        user={user}
+        loading={loading}
+        setLoading={setLoading}
+        handlePaidEnrollment={handlePaidEnrollment}
+        handleFreeEnrollment={handleFreeEnrollment}
+        />
 
         <PreviewModal showModal={showModal} 
         setShowModal={setShowModal}

@@ -1,5 +1,5 @@
 import {currentFormatter} from '../../utils/helper'
-import {Badge } from 'antd'
+import {Badge, Button } from 'antd'
 import ReactPlayer from "react-player"
 
 
@@ -7,7 +7,12 @@ import ReactPlayer from "react-player"
 
 const SingleCourseView = ({course,
     showModal, setShowModal,
-    preview, setPreview}) => {
+    preview, setPreview, 
+    user,
+    loading,
+    setLoading,
+    handlePaidEnrollment,
+    handleFreeEnrollment}) => {
     
     const {name, description, instructor, updatedAt, 
         lessons, image, price, paid, category} = course
@@ -52,9 +57,14 @@ return(
         (<div>
             <img src={course.image.Location} alt={name} className="img"/>
         </div>)}
-
-        <p>course image</p>
-        <button className="btn btn-success">Enroll</button>
+            {loading ? (
+                <div className="justify-content-center tent-danger"> </div>
+            ) : (
+                <Button type="dashed" shape="round" size="large" disabled={loading}
+                onClick={paid ? handlePaidEnrollment : handleFreeEnrollment}
+                className="mt-2 btn btn-success">{user ? "Enroll" : "Login to Enroll"}</Button>
+            )}
+        
 
     </div>
 
