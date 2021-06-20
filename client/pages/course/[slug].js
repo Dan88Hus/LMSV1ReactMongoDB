@@ -3,6 +3,8 @@ import axios from 'axios'
 import {useRouter} from 'next/router'
 import SingleCourseView from '../../components/cards/SingleCourseView'
 import PreviewModal from '../../components/modal/PreviewModal'
+import SingleCourseLessons from '../../components/cards/SingleCourseLessons'
+
 
 
 // import {toast} from 'react-toastify'
@@ -25,6 +27,13 @@ const SingleCourse = ({course}) =>{
         setShowModal={setShowModal}
         preview={preview} 
         setPreview={setPreview} />
+        
+        {course.lessons && (
+            <SingleCourseLessons lessons={course.lessons}
+            setPreview={setPreview} showModal={showModal}
+            setShowModal={setShowModal}
+            />
+        )}
         </>
     )
 }

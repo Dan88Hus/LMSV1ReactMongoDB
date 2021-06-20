@@ -55,7 +55,7 @@ const UpdateLessonForm = ({current, setCurrent,
                     <div className="col h6 text-muted">Preview</div>
                     <Switch className="col-auto float-end"
                     disabled={uploading}
-                    defaultChecked={current.free_preview}
+                    checked={current.free_preview}
                     name="free_preview"
                     onChange={v => setCurrent({...current, free_preview: v})}/>
                 </div>
