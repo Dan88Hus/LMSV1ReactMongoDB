@@ -10,7 +10,7 @@ const {requireSignin, isInstructor} = require('../middlewares/index')
 const {uploadImage, removeImage, create,
     read, uploadVideo, removeVideo, addLesson,
      update, removeLesson, updateLesson,
-     publishCourse, unpublishCourse, courses} = require('../controllers/courses')
+     publishCourse, unpublishCourse, courses, checkEnrollment} = require('../controllers/courses')
 
 //publish/Unpublish
 router.put("/course/publish/:courseId", requireSignin, publishCourse)
@@ -28,7 +28,7 @@ router.post("/course/lesson/:slug/:instructorId", requireSignin, addLesson)
 router.put("/course/:slug", requireSignin, update)
 router.put("/course/:slug/:lessonId", requireSignin, removeLesson)
 router.put("/course/lesson/:slug/:instructorId", requireSignin, updateLesson)
-
+router.get("/ckeck-enrollment/:courseId", requireSignin, checkEnrollment)
 
 
 

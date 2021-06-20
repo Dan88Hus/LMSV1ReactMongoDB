@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk') 
 const {nanoid} = require("nanoid")
 const Course = require("../models/course")
+const User = require("../models/user")
 const slugify = require("slugify")
 const fs = require("fs")
 
@@ -266,4 +267,17 @@ exports.courses = async(req,res) =>{
         console.log(error.message)
         return res.status(400).send("find published courses server error")
     }
+}
+
+exports.checkEnrollment = async (req,res) =>{
+    const {courseId} = req.params
+    const user = await User.findById(req.user._id).exec()
+    let ids =[]
+    for (let i =0; i< user.courses.length; i++){
+        ids.push(user.courses[i].toString())
+    }
+    res.json({ 
+        status: ids.includes(courseId), //true or false
+        course: await Course.findById(courseId).exec() //Dont know why we need this
+    })
 }
