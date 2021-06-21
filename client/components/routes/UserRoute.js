@@ -28,17 +28,15 @@ const UserRoute = ({children, showNav = true}) => {
     return (
     
     <>
-    {!ok ? (<h1 className="text-center">Museet be LOGIN</h1>) : 
+    {!ok ? (<h1 className="text-center">Must be LOGIN</h1>) : 
     
     <div className="container-fluid">
-        <div className="row">
-            <div className="col-md-2">
-                {showNav && <UserNav />}
-            </div>
-            <div className="col-md-10">
+ 
+
+
                 {children}
-            </div>
-        </div>
+
+
     </div>
     }
     </>

@@ -8,7 +8,10 @@ import {Context} from '../../../context/index'
 // import {toast} from 'react-toastify'
 // import {loadStripe} from "@stripe/stripe-js"
 import StudentRoute from '../../../components/routes/UserRoute'
+import {Button, Menu, Avatar} from 'antd'
 
+
+const {Item} = Menu
 
 const SingleCourse = () =>{
     const router = useRouter()
@@ -17,7 +20,8 @@ const SingleCourse = () =>{
     
     const [loading, setLoading] = useState(false)
     const {state: {user}} = useContext(Context)
-    const [enrolled, setEnrolled] = useState({})
+    const [clicked, setClicked] = useState(-1)
+    const [collapsed, setCollapsed] = useState(false)
     const [course, setCourse] = useState({lessons: []}) //course.lesson
 
     
@@ -38,7 +42,28 @@ const SingleCourse = () =>{
         
     return (
         <StudentRoute>
-       {JSON.stringify(course, null, 6)}
+       <div className="row">
+           <div style={{maxWidth: 250}}>
+                <Menu defaultSelectedKeys={[clicked]} 
+                inlineCollapsed={collapsed}>
+                    {course.lessons.map((lesson, index) => (
+                        <Menu.Item key={index} 
+                        icon={<Avatar
+                            >{index+1}</Avatar>}
+                        onClick={()=> setClicked(index+1)}>
+                            {lesson.title.substring(0,30)}
+                        </Menu.Item>
+                    ))}
+                </Menu>
+           </div>
+           <div className="col">
+               {clicked !== -1 ? (
+                   <>
+                   {course.lessons[clicked]}
+                   </>
+               ) : "please select lesson to see details"}
+           </div>
+       </div>
         </StudentRoute>
     )
 }
