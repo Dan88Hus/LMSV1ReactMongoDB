@@ -342,3 +342,23 @@ exports.paidEnrollment = async (req,res)=> {
         res.status(404).send("Paid Enrollment create failed")
     }
 }
+exports.stripeSuccess = async(req,res) =>{
+    try {
+        const course = await Course.findById(req.params.courseId).exec()
+        const user = await User.findById(req.user._id).exec()
+        if(!user.stripeSession.id) return res.sendStatus(404)
+        const session = await stripe.checkout.sessions.retrieve(user.stripeSession.id)
+        console.log("Stripe session Success")
+        if (session.payment_status === "paid"){
+            await User.findByIdAndUpdate(user._id, {
+                $addToSet: { courses: course._id},
+                $set: {stripeSession: {}},
+            }, {new:true}).exec()
+        }
+        res.json({success: true, course})
+
+    } catch (error) {
+        console.log(error.message)
+        res.json({ success: false})
+    }
+}
