@@ -11,7 +11,7 @@ const {uploadImage, removeImage, create,
     read, uploadVideo, removeVideo, addLesson,
      update, removeLesson, updateLesson,
      publishCourse, unpublishCourse, courses, checkEnrollment,
-     freeEnrollment} = require('../controllers/courses')
+     freeEnrollment, paidEnrollment} = require('../controllers/courses')
 
 //publish/Unpublish
 router.put("/course/publish/:courseId", requireSignin, publishCourse)
@@ -31,6 +31,7 @@ router.put("/course/:slug/:lessonId", requireSignin, removeLesson)
 router.put("/course/lesson/:slug/:instructorId", requireSignin, updateLesson)
 router.get("/check-enrollment/:courseId", requireSignin, checkEnrollment)
 router.post("/free-enrollment/:courseId", requireSignin, freeEnrollment)
+router.post("/paid-enrollment/:courseId", requireSignin, paidEnrollment)
 
 
 

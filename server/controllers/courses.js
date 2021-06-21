@@ -4,6 +4,7 @@ const Course = require("../models/course")
 const User = require("../models/user")
 const slugify = require("slugify")
 const fs = require("fs")
+const stripe = require("stripe")(process.env.STRIPE_SECRET)
 
 
 const awsConfig = {
@@ -301,5 +302,43 @@ exports.freeEnrollment = async (req,res) => {
     } catch (error) {
         console.log("Free enrollment error",error.message)
         res.status(404).send("Enrollment create failed")
+    }
+}
+exports.paidEnrollment = async (req,res)=> {
+    try { 
+        const course = await Course.findById(req.params.courseId).populate("instructor").exec()
+        if(!course.paid) return
+        //application fee%
+        const fee = (course.price * 30)/100
+        //stripe session
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ["card"],
+            line_items: [{
+                name: course.name,
+                amount: Math.round(course.price.toFixed(2)*100), // in cents
+                currency: "usd",
+                quantity: 1,
+
+            }],
+            //charge buyer and transfer balance to seleer after fee
+            payment_intent_data:{
+                application_fee_amount: Math.round(fee.toFixed(2)*100),
+                transfer_data: {
+                    destination: course.instructor.stripe_account_id,
+                }
+            },
+            // redirect url after successful payment 
+            success_url: `${process.env.STRIPE_SUCCESS_URL}/${course._id}`,
+            cancel_url: process.env.STRIPE_CANCEL_URL,
+        })
+        // console.log("session Id", session)
+        // save session to DB in user field by updating
+        const result = await User.findByIdAndUpdate(req.user._id, {
+            stripeSession: session
+        }, {new:true}).exec()
+        res.send(session.id)
+    } catch (error) {
+        console.log("Paid enrollment error",error.message)
+        res.status(404).send("Paid Enrollment create failed")
     }
 }

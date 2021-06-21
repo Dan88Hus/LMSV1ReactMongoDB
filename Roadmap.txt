@@ -179,7 +179,16 @@ free enrollment
     conditional rendering of enrollment button 
     free enrolment server 
     free enroolment client 
-    
+paid enrollment 
+    stripe payment setup 
+    stripe paid enrollment server 
+        %30 platform fee and %70 goes to instructor 
+    stripe paid enrollment client 
+        npm i @stripe/stripe-js
+    stripe cancel page 
+    stripe success page 
+    stripe success server 
+
         
 
 
