@@ -4,7 +4,7 @@ import {useRouter} from 'next/router'
 import UserNav from "../nav/UserNav"
 
 
-const UserRoute = ({children}) => {
+const UserRoute = ({children, showNav = true}) => {
     const router = useRouter()
 
     const [ok, setOk] = useState(false)
@@ -33,7 +33,7 @@ const UserRoute = ({children}) => {
     <div className="container-fluid">
         <div className="row">
             <div className="col-md-2">
-                <UserNav />
+                {showNav && <UserNav />}
             </div>
             <div className="col-md-10">
                 {children}

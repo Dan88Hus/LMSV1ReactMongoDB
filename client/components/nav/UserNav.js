@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 
 
 
-const UserNav = ()=>{
+const UserNav = ({showNav=true})=>{
     const [current, setCurrent] = useState("")
 
     useEffect(()=>{
