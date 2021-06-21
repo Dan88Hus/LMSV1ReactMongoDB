@@ -12,7 +12,7 @@ const {uploadImage, removeImage, create,
      update, removeLesson, updateLesson,
      publishCourse, unpublishCourse, courses, checkEnrollment,
      freeEnrollment, paidEnrollment,
-     stripeSuccess} = require('../controllers/courses')
+     stripeSuccess, userCourses} = require('../controllers/courses')
 
 //publish/Unpublish
 router.put("/course/publish/:courseId", requireSignin, publishCourse)
@@ -34,7 +34,7 @@ router.get("/check-enrollment/:courseId", requireSignin, checkEnrollment)
 router.post("/free-enrollment/:courseId", requireSignin, freeEnrollment)
 router.post("/paid-enrollment/:courseId", requireSignin, paidEnrollment)
 router.get("/stripe-success/:courseId", requireSignin, stripeSuccess)
-
+router.get("/user-courses", requireSignin, userCourses )
 
 
 module.exports = router
