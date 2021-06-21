@@ -7,6 +7,8 @@ import {useRouter} from 'next/router'
 import {Context} from '../../../context/index'
 // import {toast} from 'react-toastify'
 // import {loadStripe} from "@stripe/stripe-js"
+import StudentRoute from '../../../components/routes/UserRoute'
+
 
 const SingleCourse = () =>{
     const router = useRouter()
@@ -35,9 +37,9 @@ const SingleCourse = () =>{
 
         
     return (
-        <>
+        <StudentRoute>
        {JSON.stringify(course, null, 6)}
-        </>
+        </StudentRoute>
     )
 }
 export default SingleCourse
