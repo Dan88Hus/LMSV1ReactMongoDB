@@ -37,13 +37,13 @@ const UserIndex = () => {
     return (
     <UserRoute>
     <h1 className="text-center">
-        User Dashboard
+        User Courses List
     </h1>
     {!loading && (
         <div>
             {courses.map((course) => (
-                <div key={courses._id} className="row mb-2">
-                    <div className="col">
+                <div key={courses._id} className="row mb-1">
+                    <div className="col-auto">
                     <Avatar
                     size={80}
                     shape="square"
@@ -51,8 +51,12 @@ const UserIndex = () => {
                     />
                     </div>
                     <div className="col">
-                        test
+                         <Link href={`/user/course/${course.slug}`}><a><div>{course.name}</div></a></Link>
+                         <div>Lessons: {course.lessons.length}</div>
+                         <div className="text-muted">{course.instructor.name}</div>
+
                     </div>
+                    <hr className="mt-3"/>
                 </div>
             ))}
         </div>
