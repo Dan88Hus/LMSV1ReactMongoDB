@@ -12,7 +12,8 @@ const {uploadImage, removeImage, create,
      update, removeLesson, updateLesson,
      publishCourse, unpublishCourse, courses, checkEnrollment,
      freeEnrollment, paidEnrollment,
-     stripeSuccess, userCourses} = require('../controllers/courses')
+     stripeSuccess, userCourses, markCompleted, listcompleted} = require('../controllers/courses')
+const completed = require('../models/completed')
 
 //publish/Unpublish
 router.put("/course/publish/:courseId", requireSignin, publishCourse)
@@ -36,5 +37,8 @@ router.post("/paid-enrollment/:courseId", requireSignin, paidEnrollment)
 router.get("/stripe-success/:courseId", requireSignin, stripeSuccess)
 router.get("/user-courses", requireSignin, userCourses )
 router.get("/user/course/:slug", requireSignin, isEnrolled, read)
+//mark completed 
 
+router.post("/mark-completed", requireSignin, markCompleted)
+router.post("/list-completed", requireSignin, listcompleted)
 module.exports = router

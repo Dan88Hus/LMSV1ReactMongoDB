@@ -5,6 +5,7 @@ const User = require("../models/user")
 const slugify = require("slugify")
 const fs = require("fs")
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
+const Completed = require("../models/completed")
 
 
 const awsConfig = {
@@ -366,4 +367,37 @@ exports.userCourses = async(req,res) =>{
     const user = await User.findById(req.user._id).exec()
     const courses = await Course.find({_id: {$in: user.courses}}).populate("instructor", "_id name").exec()
     res.json(courses)
+}
+
+exports.markCompleted = async(req, res)=> {
+    const {courseId, lessonId} = req.body
+    // console.log("courseId and LessonId", courseId, lessonId)
+    const existing = await Completed.findOne({user: req.user._id, course: courseId}).exec()
+    if (existing){
+        //updata
+        const updated = await Completed.findOneAndUpdate({
+            user: req.user._id,
+            course: courseId
+        }, {$addToSet: {lessons: lessonId}}, {new:true}).exec()
+        res.json({ok: true})
+    } else {
+        // create
+        const created = await new Completed({
+            user: req.user._id,
+            course: courseId,
+            lesson: lessonId
+        }).save()
+        res.json({ok :true})
+    }
+}
+exports.listcompleted = async(req,res) =>{
+    try {
+        const list = await Completed.findOne({
+            user: req.user._id, course: req.body.courseId}).exec()
+            list && res.json(list.lessons)
+
+            
+    } catch (error) {
+        console.log(error.message)
+    }
 }
