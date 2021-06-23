@@ -92,6 +92,7 @@ exports.read = async(req,res) =>{
     // console.log("read end-point")
     try {
         const course = await Course.findOne({slug: req.params.slug}).populate("instructor","_id name").exec()
+        // console.log("COURSE,", course)
         res.json(course)
     } catch (error) {
         console.log(error.message)
@@ -396,7 +397,7 @@ exports.listcompleted = async(req,res) =>{
             user: req.user._id, course: req.body.courseId}).exec()
             list && res.json(list.lessons)
 
-            
+
     } catch (error) {
         console.log(error.message)
     }

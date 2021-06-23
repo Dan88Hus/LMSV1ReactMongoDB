@@ -1,16 +1,13 @@
 import {useState, useEffect, useContext} from 'react'
 import axios from 'axios'
 import {useRouter} from 'next/router'
-// import SingleCourseView from '../../components/cards/SingleCourseView'
-// import PreviewModal from '../../components/modal/PreviewModal'
-// import SingleCourseLessons from '../../components/cards/SingleCourseLessons'
 import {Context} from '../../../context/index'
 import {toast} from 'react-toastify'
-// import {loadStripe} from "@stripe/stripe-js"
 import StudentRoute from '../../../components/routes/UserRoute'
 import {Button, Menu, Avatar} from 'antd'
 import ReactPlayer from 'react-player'
 import ReactMarkdown from 'react-markdown'
+import {CheckCircleFilled, MinusCircleFilled} from '@ant-design/icons'
 
 
 const {Item} = Menu
@@ -43,7 +40,7 @@ const SingleCourse = () =>{
     const {data}  =await axios.post("/api/list-completed", {
         courseId: course._id})
         console.log("completed Lessons", data)
-        toast.success("fetching List success")
+        // toast.success("fetching List success")
         setCompletedLessons(data)
    }
 
@@ -59,8 +56,16 @@ const SingleCourse = () =>{
             courseId: course._id,
             lessonId: course.lessons[clicked]._id,
             })
-            toast.success("Marked Completed")
+            // toast.success("Marked Completed")
             console.log("data", data)
+    }
+    const markInCompleted = async () =>{
+        const {data} = await axios.post("/api/mark-incomplete", {
+            courseId: course._id,
+            lessonId: course.lessons[clicked]._id,
+            })
+            console.log("Incomplete data", data)
+
     }
 
         
@@ -76,8 +81,9 @@ const SingleCourse = () =>{
                         <Menu.Item key={index} 
                         icon={<Avatar
                             >{index+1}</Avatar>}
-                        onClick={()=> setClicked(index+1)}>
+                        onClick={()=> setClicked(index)}>
                             {lesson.title.substring(0,30)}
+                            {completedLessons.includes(lesson._id) ? (<CheckCircleFilled className="float-end"/>) : (<MinusCircleFilled className="float-end"/>)}
                         </Menu.Item>
                     ))}
                 </Menu>
@@ -88,7 +94,10 @@ const SingleCourse = () =>{
 
                    <div className="col text-center m-3">
                        <b>{course.lessons[clicked] && course.lessons[clicked].title.substring(0,30)}</b>
-                       <span style={{cursor: "pointer"}} className="float-end" onClick={markCompleted}>Completed?</span>
+                   {completedLessons.includes(course.lessons[clicked]._id) ?  (<span style={{cursor: "pointer"}} className="float-end" onClick={markInCompleted}>UnComplete</span>) 
+                   : (<span style={{cursor: "pointer"}} className="float-end" onClick={markCompleted}>Complete</span>
+                    )
+                   }
                    </div>
                    {course.lessons[clicked] && course.lessons[clicked].video && course.lessons[clicked].video.Location && (
                        <>
