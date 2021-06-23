@@ -79,4 +79,16 @@ exports.instructorCourses = async (req,res)=>{
         console.log(error.message)
     }
 }
+exports.studentCount = async(req, res) =>{
+    try {
+        const {courseId} = req.body
+        const users = await User.find({
+            courses: courseId
+        }).select("_id").exec()
+        res.json(users)
+    } catch (error) {
+        console.log(error.message)
+    }
+
+}
 

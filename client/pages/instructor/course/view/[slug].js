@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import {useRouter} from 'next/router'
 import InstructorRoute from '../../../../components/routes/InstructorRoute'
 import axios from 'axios'
-import {Avatar, Tooltip, Button, Modal, List} from 'antd'
+import {Avatar, Tooltip, Button, Modal, List, Badge} from 'antd'
 import {EditOutlined, CheckOutlined} from '@ant-design/icons'
 import ReactMarkDown from 'react-markdown'
 import AddLessonForm from '../../../../components/forms/AddLessonForm'
@@ -20,7 +20,21 @@ const CourseView = ()=>{
     const [uploading, setUploading] = useState(false)
     const [uploadButtonText, setUploadButtonText] = useState("Upload Video")
     const [progress, setProgress] = useState(0)
+    // student count
+    const [students, setStudents] = useState(0)
 
+    useEffect(()=>{
+        course && studentCount()
+    },[course])
+
+    const studentCount = async() =>{
+        const {data} = await axios.post(`/api/instructor/student-count`,{
+            courseId : course._id
+        })
+        // toast.success("students count is updated")
+        console.log(data.length)
+        // setStudents(data.length)
+    }
 
 
     const router = useRouter()
@@ -150,6 +164,8 @@ const CourseView = ()=>{
                         (<div className="text-muted">Not Published</div>)}
                    
                    <div className="text-end">
+                        <Badge className="m-3" count={`${students} Enrolled`}>
+                        </Badge>
                         <Tooltip title="Edit">
                             <EditOutlined onClick={() => router.push(`/instructor/course/edit/${slug}`)} style={{cursor: "pointer"}} className="h5 mr-4"/>
                         </Tooltip>

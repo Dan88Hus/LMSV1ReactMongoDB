@@ -23,6 +23,7 @@ const SingleCourse = () =>{
     const [collapsed, setCollapsed] = useState(false)
     const [course, setCourse] = useState({lessons: []}) //course.lesson
     const [completedLessons, setCompletedLessons] = useState([])
+    const [updateState, setUpdateState] = useState(false)
 
     
 
@@ -39,7 +40,7 @@ const SingleCourse = () =>{
    const loadCompletedLessons = async () => {
     const {data}  =await axios.post("/api/list-completed", {
         courseId: course._id})
-        console.log("completed Lessons", data)
+        // console.log("completed Lessons", data)
         // toast.success("fetching List success")
         setCompletedLessons(data)
    }
@@ -57,15 +58,26 @@ const SingleCourse = () =>{
             lessonId: course.lessons[clicked]._id,
             })
             // toast.success("Marked Completed")
-            console.log("data", data)
+            // console.log("data", data)
+            setCompletedLessons([...completedLessons, course.lessons[clicked]._id])
     }
     const markInCompleted = async () =>{
+       try {
         const {data} = await axios.post("/api/mark-incomplete", {
             courseId: course._id,
             lessonId: course.lessons[clicked]._id,
             })
-            console.log("Incomplete data", data)
-
+            // console.log("Incomplete data", data)
+            const all = completedLessons
+            const index = all.indexOf(course.lessons[clicked]._id) // true/false
+            if(index > -1){
+                all.splice(index, 1)
+                setCompletedLessons(all)
+                setUpdateState(!updateState)
+            }
+       } catch (error) {
+           console.log(error.message)
+       }
     }
 
         
@@ -108,6 +120,7 @@ const SingleCourse = () =>{
                            width="100%"
                            height="100%"
                            controls
+                           onEnded={()=> markCompleted()}
                            />
                        </div>
   
