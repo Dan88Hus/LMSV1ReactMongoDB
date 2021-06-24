@@ -156,15 +156,15 @@ const CourseView = ()=>{
                     <div className="row">
                         <div className="col-auto">
                             <h5 className="text-primary text-start">Category: {course.category}</h5>
-                            <p>{course.lessons && course.lessons.length} Lessons</p>
+                            <p>{course.lessons && course.lessons.length} Item</p>
                         </div>
                         <div className="col text-end">
-                        {course.published ? (<div className="text-muted">Published</div>)
+                        {course.published ? (<div className="text-success">Online</div>)
                          : 
-                        (<div className="text-muted">Not Published</div>)}
+                        (<div className="text-muted">Offline</div>)}
                    
                    <div className="text-end">
-                        <Badge className="m-3" count={`${students} Enrolled`}>
+                        <Badge className="m-3" count={`${students} Sold`}>
                         </Badge>
                         <Tooltip title="Edit">
                             <EditOutlined onClick={() => router.push(`/instructor/course/edit/${slug}`)} style={{cursor: "pointer"}} className="h5 mr-4"/>

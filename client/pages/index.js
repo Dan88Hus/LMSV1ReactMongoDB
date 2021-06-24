@@ -19,9 +19,9 @@ const Index = ({courses}) => {
     
      return (
     <>
-    <h1 className="text-center">eLearning</h1>
+    <h1 className="text-center">Visual Products</h1>
     <div className="container-fluid">
-    <div className="row">
+    <div className="row-auto">
     {courses.map((course)=>{
         return(
             <div key={course._id} className="col-auto md-4">

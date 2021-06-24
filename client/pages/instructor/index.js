@@ -14,8 +14,7 @@ const InstructorIndex = () =>{
     },[])
     return (
         <InstructorRoute>
-        <h1 className="text-center">Instructor Dashboard</h1>
-        {/* {JSON.stringify(courses,null,4)} */}
+        <h1 className="text-center">Seller Dashboard</h1>
         {courses && courses.map(course =>{
             return (
                 <>
@@ -33,19 +32,19 @@ const InstructorIndex = () =>{
                             <Link href={`/instructor/course/view/${course.slug}`}>
                                 <a className="h5 mt-2 text-primary">{course.name}</a>
                             </Link>
-                            <p >{course.lessons.length} Lessons</p>
+                            <p >{course.lessons.length} Products</p>
 
                             {course.lessons.legth<5 ? (<p>
                                 At least 5 lessons are required to publish a course
                             </p>) : course.published ? (<p>
                                 Your course is live in the marketplace
-                            </p>) : (<p className="text-muted">ready to be published</p>) }
+                            </p>) : (<p className="text-muted">Offline</p>) }
                         </div>
                     </div>
                     <div className="col text-end">
-                        {course.published ? (<div className="text-muted">Published</div>)
+                        {course.published ? (<div className="text-success">Online</div>)
                          : 
-                        (<div className="text-muted">Not Published</div>)}
+                        (<div className="text-muted">Offline</div>)}
                     </div>
                     </div>
                 </div>

@@ -62,7 +62,7 @@ const register = () => {
                     required
                     />
 
-                    <input type="text" 
+                    <input type="password" 
                     className="form-control mb-4 p-2" 
                     value={password} 
                     onChange={e => setPassword(e.target.value)}

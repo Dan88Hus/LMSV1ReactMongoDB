@@ -36,7 +36,7 @@ const topnav = () => {
         <Menu mode="horizontal" selectedKeys={[current]}>
             <Item key="/" onClick={(e)=> setCurrent(e.key)}>
                 <Link href="/">
-                    <a>App</a>
+                    <a>Home</a>
                 </Link>
             </Item>
 
@@ -62,7 +62,7 @@ const topnav = () => {
     onClick={(e)=>setCurrent(e.key)}
     >
     <Link href="/instructor/course/create">
-        <a>Create Course</a>
+        <a>New Product</a>
     </Link>
     </Item>
 
@@ -71,7 +71,7 @@ const topnav = () => {
     onClick={(e)=>setCurrent(e.key)}
     >
     <Link href="/user/become-instructor">
-        <a>Become Instructor</a>
+        <a>Seller menu</a>
     </Link>
     </Item>
 ) }
@@ -101,7 +101,7 @@ const topnav = () => {
         className="float-end "
         >
         <Link href="/instructor">
-            <a>Instructor</a>
+            <a>Seller</a>
         </Link>
         </Item>
 )}

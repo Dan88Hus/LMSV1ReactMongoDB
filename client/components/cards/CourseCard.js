@@ -12,7 +12,7 @@ const CourseCard = ({course}) =>{
         <>
 
         <Link href={`/course/${slug}`}>
-        <div className="col-auto">
+        {/* <div className="col-fluid"> */}
             <a >
                 <Card className="mt-2 mb-1"
                 cover={image && image.Location ? (<img src={image.Location} alt={name} style={{width: "25%", height: "10%", objectFit: "cover"}}
@@ -26,16 +26,15 @@ const CourseCard = ({course}) =>{
                     {paid ? currentFormatter({
                         amount: price,
                         currency: "usd",
-                    }) : "Free"}
+                    }) : "Consignee"}
                     </h4>
                 </Card>
             </a>
-        </div>
+        {/* </div> */}
         
         </Link>
                     <h2 className="font-weight-bold">{name}</h2>
                     <p className="text-muted">by:{instructor.name}</p>
-        {/* {JSON.stringify(course)} */}
 
         </>
     )

@@ -5,10 +5,12 @@ import axios from 'axios'
 import {stripeCurrentFormatter} from '../../utils/helper'
 import Link from 'next/link'
 import {toast} from "react-toastify"
+import {Button} from 'antd'
 
 const InstructorRevenue = () => {
 
     const [balance, setBalance] =useState({pending: []})
+    const [loading, setLoading] = useState(false)
 
     useEffect(()=>{
         sendBalanceRequest()
@@ -20,7 +22,16 @@ const InstructorRevenue = () => {
         toast.success("account balance retrieved")
     }
     const handlePayoutSettings = async() => {
+        try {
+            setLoading(true)
+            const {data} = await axios.get("/api/instructor/payout-settings")
+            window.location.href = data
 
+        } catch (error) {
+            console.log(error.message)
+            setLoading(false)
+            toast.error(error.message)
+        }
     }
 
     return(
@@ -38,9 +49,13 @@ const InstructorRevenue = () => {
                                 </span>
                             ))}
                         </h4>
-                        <Link href="#">
-                        <a onClick={handlePayoutSettings}>Payouts</a>
-                        </Link>
+                        <Button
+                         onClick={handlePayoutSettings}
+                        size="large"
+                        shape="round"
+                        disabled={loading}
+                        className="bg-success">Check Account
+                        </Button>
 
                     </div>
                 </div>

@@ -84,7 +84,7 @@ const CourseCreate = () =>{
 
     return (
         <InstructorRoute>
-        <h1 className="text-center">Modify Course</h1>
+        <h1 className="text-center">Create Product</h1>
         <div className="p-3">
             <CourseCreateForm 
             handleSubmit={handleSubmit}
@@ -96,7 +96,6 @@ const CourseCreate = () =>{
             uploadButtonText={uploadButtonText}
             handleImageRemove={handleImageRemove}
             />
-            {/* <pre>{JSON.stringify(values)}</pre> */}
         </div>
         </InstructorRoute>
     )

@@ -28,7 +28,7 @@ const InstructorRoute = ({children}) => {
     return (
     
     <>
-    {!ok ? (<h1 className="text-center">Must be Instructor</h1>) : 
+    {!ok ? (<h1 className="text-center">Must be Seller</h1>) : 
     
     <div className="container-fluid">
         <div className="row">

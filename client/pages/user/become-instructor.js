@@ -28,22 +28,20 @@ const BecomeInstructor = () =>{
     }
     return (
         <>
-        <h1 className="text-center">Become Instructor</h1>
+        <h1 className="text-center mt-4">Seller</h1>
         <div className="container">
             <div className="row">
                 <div className="col-md-6 offset-md-3 text-center">
                     <div className="pt-4">
-                        <h2 className="pb-3">Setup payout to publish courses</h2>
+                        <h2 className="pb-3">Setup payout to publish product</h2>
                         <Button className="mb-3" block shape="round"
-                        icon={loading ? <LoadingOutlined/> : "Continue to configure by Stripe"}
+                        icon={loading ? <LoadingOutlined/> : "Configure Stripe"}
                         size="large"
                         onClick={becomeInstructor}
                         disabled={user && user.role && user.role.includes("Instructor") || loading}
                         >
-                        {/* {loading ? "Processing" : ""} */}
-
                         </Button>
-                        <p className="lead">You will be redirected to stripe</p>
+                        <p className="text-muted lead">You will be redirected to stripe</p>
                     </div>
 
                 </div>

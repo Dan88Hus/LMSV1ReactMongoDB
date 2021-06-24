@@ -5,7 +5,7 @@ const {Option} = Select
 const CourseCreateForm = ({handleChange,handleImage,handleSubmit, values, setValues, preview, uploadButtonText, handleImageRemove
     ,editPage = false})=> {
     const children=[]
-    for (let i=9.99; i<= 100.99; i++){
+    for (let i=5; i<= 50; i++){
         children.push(<Option key={i.toFixed(2)}>${i.toFixed(2)}</Option>)
     }
 
@@ -30,18 +30,18 @@ const CourseCreateForm = ({handleChange,handleImage,handleSubmit, values, setVal
         <div className="row">
             <div className="col-auto">
                     <Select 
-                    style={{width: "100%"}}
+                    style={{width: "200%"}}
                     size="large"
                     value={values.paid}
                     onChange={v => setValues({...values, paid: v, price: 0})}>
-                        <Option value={true}>Paid</Option>
-                        <Option value={false}>Free</Option>
+                        <Option value={true}>Sale</Option>
+                        <Option value={false}>Consignment</Option>
                     </Select>
             </div>
             {values.paid && <div className="col-auto">
                 <div className="form-group">
-                    <Select defaultValue="9.99"
-                    style={{width: "100%"}}
+                    <Select defaultValue="20"
+                    style={{marginLeft: "80px",width: "200%"}}
                     onChange={v => setValues({...values, price: v})}
                     tokenSeparators={[,]}
                     size="large"
