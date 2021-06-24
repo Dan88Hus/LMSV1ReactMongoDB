@@ -132,7 +132,7 @@ const SingleCourse = () =>{
                        />
                    {/* {JSON.stringify(course.lessons[clicked])} */}
                    </>
-               ) : "please select lesson to see details"}
+               ) : "please select item to see details"}
            </div>
        </div>
         </StudentRoute>

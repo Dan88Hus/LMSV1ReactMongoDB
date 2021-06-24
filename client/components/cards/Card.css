@@ -1,0 +1,9 @@
+.ant-card-cover{
+    width: auto;
+    background-color: blue !important;
+    height: auto;
+}
+.ant-card-body{
+    width: auto;
+    height: auto;
+}

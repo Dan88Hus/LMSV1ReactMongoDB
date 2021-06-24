@@ -1,4 +1,4 @@
-import {List ,Card, Badge} from 'antd'
+import {List ,Card, Badge, Col, Row} from 'antd'
 import Link from 'next/link'
 import {currentFormatter} from '../../utils/helper'
 
@@ -10,18 +10,23 @@ const CourseCard = ({course}) =>{
 
     return(
         <>
+<div className="site-card-wrapper">
 
         <Link href={`/course/${slug}`}>
-        {/* <div className="col-fluid"> */}
             <a >
+            <Row gutter={0}> 
+            <Col span={50}> 
                 <Card className="mt-2 mb-1"
-                cover={image && image.Location ? (<img src={image.Location} alt={name} style={{width: "25%", height: "10%", objectFit: "cover"}}
+                style={{width: "50%", height: "50%"}}
+                cover={image && image.Location ? (<img src={image.Location} alt={name}
                 className="p-1 bg bg-danger"></img>) : ("No Image")}>
-                    <h2 className="font-weight-bold">{name}</h2>
-                    <p className="text-muted">by:{instructor.name}</p>
+                    <Meta title={name} description={`by:${instructor.name}`}
+                    style={{width: "1000%"}}
+                    />
+                    <br />
                     <Badge count={category}
                     style={{backgroundColor: "#03a9f4"}}
-                    className="pb-2 mr-r"/>
+                    className="pb-2"/>
                     <h4 className="bt-2">
                     {paid ? currentFormatter({
                         amount: price,
@@ -29,13 +34,15 @@ const CourseCard = ({course}) =>{
                     }) : "Consignee"}
                     </h4>
                 </Card>
+                </Col>
+                </Row>
             </a>
-        {/* </div> */}
         
         </Link>
-                    <h2 className="font-weight-bold">{name}</h2>
-                    <p className="text-muted">by:{instructor.name}</p>
-
+                    {/* <h2 className="font-weight-bold">{name}</h2> */}
+                    {/* <p className="text-muted">by:{instructor.name}</p> */}
+                    {/* </div> */}
+</div>
         </>
     )
 }

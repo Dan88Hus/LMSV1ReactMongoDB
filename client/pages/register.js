@@ -34,6 +34,7 @@ const register = () => {
             // console.log("Register response", data)
             toast.success("Registration successful")
             setLoading(false)
+            router.push("/login")
         } catch (error) {
             console.log("error in catch", error)
             toast.error(error.response.data)

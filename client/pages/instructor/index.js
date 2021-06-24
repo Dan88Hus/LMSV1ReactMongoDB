@@ -37,7 +37,7 @@ const InstructorIndex = () =>{
                             {course.lessons.legth<5 ? (<p>
                                 At least 5 lessons are required to publish a course
                             </p>) : course.published ? (<p>
-                                Your course is live in the marketplace
+                                
                             </p>) : (<p className="text-muted">Offline</p>) }
                         </div>
                     </div>

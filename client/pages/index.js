@@ -20,18 +20,16 @@ const Index = ({courses}) => {
      return (
     <>
     <h1 className="text-center">Visual Products</h1>
-    <div className="container-fluid">
-    <div className="row-auto">
-    {courses.map((course)=>{
-        return(
-            <div key={course._id} className="col-auto md-4">
+    {/* <div className="container"> */}
+    <div className="row">
+    {courses.map((course)=>(
+            <div key={course._id} className="col">
                 <CourseCard 
                 course={course}/>
-            </div>
-        )
-    })}
+            </div>)
+    )}
     </div>
-    </div>
+    {/* </div> */}
 
     </>
 )
